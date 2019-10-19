@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_my_contract"
+            android:icon="@drawable/ic_menu_contract"
+            android:title="@string/menu_my_contract" />
+        <item
+            android:id="@+id/nav_create_contract"
+            android:icon="@drawable/ic_menu_create"
+            android:title="@string/menu_create_contract" />
+        <item
+            android:id="@+id/nav_feedback"
+            android:icon="@drawable/ic_menu_feedback"
+            android:title="@string/menu_feedback" />
+
+        <item
+            android:id="@+id/nav_setting"
+            android:icon="@drawable/ic_menu_setting"
+            android:title="@string/menu_setting" />
+    </group>
+</menu>
