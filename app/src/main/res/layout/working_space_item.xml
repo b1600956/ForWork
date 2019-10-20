@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="@dimen/activity_horizontal_margin">
+
+    <ImageButton
+        android:id="@+id/working_space_img"
+        android:contentDescription="@string/workspace_img_desc"
+        android:layout_width="220dp"
+        android:layout_height="170dp" />
+
+    <TextView
+        android:id="@+id/working_space_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+    <TextView
+        android:id="@+id/working_space_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+</LinearLayout>

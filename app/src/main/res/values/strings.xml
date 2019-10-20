@@ -11,4 +11,34 @@
     <string name="search_hint">Search by place names</string>
     <string name="menu_filter">Filter</string>
     <string name="menu_search">Search by place name</string>
+    <string name="locationlist_string">alor setar,cyberjaya,george town,ipoh,jb,kl,kuching,malacca,pj,shah alam,subang jaya</string>
+    <string name="workspace_img_desc">Working space image</string>
+    <string name="workspace_daily">Daily</string>
+    <string name="workspace_weekly">Weekly</string>
+    <string name="work_space_monthly">Monthly</string>
+    <string-array name="workspace_names">
+        <item>Scoopoint</item>
+        <item>MSOGO</item>
+        <item>Habitat Coworking Cafe</item>
+        <item>CoHere</item>
+        <item>aCAT Penang</item>
+        <item>The Venture Working Space</item>
+    </string-array>
+    <string-array name="workspace_address">
+        <item>Tamarins House, George Town</item>
+        <item>Jalan Dr Lim Chwee Leong</item>
+        <item>Taman Tanjing Indah, Butterworth</item>
+        <item>Jalan Tanjung Tokong</item>
+        <item>Lintang Bayan Lepas 11</item>
+        <item>2nd Floor, 26-B Jalan Kenari</item>
+    </string-array>
+
+    <array name="workspace_images">
+        <item>@drawable/workspace_img</item>
+        <item>@drawable/workspace_img2</item>
+        <item>@drawable/workspace_img3</item>
+        <item>@drawable/workspace_img4</item>
+        <item>@drawable/workspace_img5</item>
+        <item>@drawable/workspace_img6</item>
+    </array>
 </resources>
