@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+	<html lang="en" dir="ltr">
+		<head>
+			<title>Mobile development guide</title>
+			<meta charset = "utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1">
+			<link rel="stylesheet" href="css/bootstrap.min.css">
+			<link rel="stylesheet" href="css/bootstrap-grid.css">
+			<link rel="stylesheet" href="indexCss.css">
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+			<script src="js/bootstrap.min.js"></script>
+			<style>
+				p,pre {
+					display:block;
+				}
+			</style>
+		</head>
+		<body>
+			<nav class="navbar navbar-expand-sm navbar-expand-md bg-light navbar-light">
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link" href="mobileAssign.html">Logic layer</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="viewLayer.html">View layer</a>
+					</li>
+					<li class="nav-item active">
+						<a class="nav-link" href="androidStudioID.html">Android Studio ID</a>
+					</li>
+				</ul>
+			</nav>
+			<div class="container">
+				<h1>Mobile Application Development Fundamental</h1>
+				<div class="parentBox">
+					<h2>ID</h2>
+					<div>
+						<p>
+						<pre>
+<b>menu/menu_navigation.xml</b>
+- @+id/nav_my_contract
+- @+id/nav_create_contract
+- @+id/nav_feedback
+- @+id/nav_setting
+</pre>
+</p>
+<p>
+<pre>
+<b>menu/menu_main</b>
+- @+id/action_search
+- @+id/action_filter
+</pre>
+</p>
+
+<p>
+<pre>
+<b>layout/app_bar_main.xml</b>
+- @+id/toolbar
+</pre>
+</p>
+<p>
+<pre>
+<b>layout/content_main.xml</b>
+- @+id/recyclerView
+- @+id/workspace_list_daily
+- @+id/workspace_list_weekly
+- @+id/workspace_list_monthly
+</pre>
+</p>
+<p>
+<pre>
+<b>layout/locationlist_item.xml</b>
+- @+id/location_item
+</pre>
+</p>
+<p>
+<pre>
+<b>layout/navheader.xml</b>
+- @+id/imageView
+- @+id/textView
+</pre>
+</p>
+<p>
+<pre>
+<b>layout/working_space_item.xml</b>
+- @+id/working_space_img
+- @+id/working_space_name
+- @+id/working_space_address
+</pre>
+</p>
+
+					</div>
+				</div>
+			</div>
+			<script>
+				var box = document.getElementsByClassName("box");
+				var header = document.getElementsByTagName("H3");
+				for (var i = 0; i < box.length; i++){
+					header[i].setAttribute("id",i);
+					header[i].setAttribute("onclick","descDisplay(this.id)");
+
+					}
+				function descDisplay(x){
+					var child = box[x].children;
+					child[0].style.color = "black";
+					for (var j = 1; j < child.length; j++){
+						//must use if (display == block instead of none) due to css display = none , DOM can't really get value none from css 
+						//so if using none will result in clicking 2 times to display block for the first time.
+						if (child[j].style.display == "block"){
+							child[j].style.display = "none";
+						}
+						else{
+							child[j].style.display = "block";
+						}
+					}
+				}
+
+			</script>
+			<footer>
+				<small>
+					Copyright reserved &copy; Android Studio 2018<br>Created by Soo Meng Kit 
+				</small>
+			</footer>
+		</body>
+	</html>
+
+
