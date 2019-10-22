@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+	<html lang="en" dir="ltr">
+		<head>
+			<title>View Layer</title>
+			<meta charset = "utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1">
+			<link rel="stylesheet" href="css/bootstrap.min.css">
+			<link rel="stylesheet" href="css/bootstrap-grid.css">
+			<link rel="stylesheet" href="indexCss.css">
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+			<script src="js/bootstrap.min.js"></script>
+		</head>
+		<body>
+			<nav class="navbar navbar-expand-sm navbar-expand-md bg-light navbar-light">
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link" href="mobileAssign.html">Logic layer</a>
+					</li>
+					<li class="nav-item active">
+						<a class="nav-link" href="viewLayer.html">View layer</a>
+					</li>
+				</ul>
+			</nav>
+			<div class="container">
+				<h1>Mobile Application Development Fundamental</h1>
+				<div class="parentBox">
+					<h2>Layout</h2>
+					<div class="box">
+						<h3>LinearLayout</h3>
+						<p>
+							In activity_main.xml file, coding:												
+<pre>&lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:paddingBottom="@dimen/activity_vertical_margin"
+android:paddingLeft="@dimen/activity_horizontal_margin"
+android:paddingRight="@dimen/activity_horizontal_margin"
+android:paddingTop="@dimen/activity_vertical_margin"
+tools:context=".MainActivity"&gt;
+
+	&lt;TextView
+		android:id="@+id/show_count"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="Value"
+		android:textSize="160sp"
+		android:textStyle="bold"
+		android:textColor="@color/colorPrimary"
+		android:background="@color/myBackgroundColor" /&gt;
+		
+	&lt;TextView
+		android:id="@+id/article"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:gravity="center"
+		android:layout_weight="2"
+		android:layout_below="@id/article_subheading"
+		android:lineSpacingExtra="5sp"
+		android:padding="10dp"
+		android:textAppearance="@android:style/TextAppearance"
+		android:autoLink="web"
+		android:text="@string/article_text"/&gt;
+
+	&lt;Button
+		android:id="@+id/button_count"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="button"
+		android:onClick="showToast"
+		android:background="@color/colorPrimary"
+		android:textColor="@android:color/white" /&gt;
+		
+	&lt;EditText
+		android:id="@+id/editText_main"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:layout_toLeftOf="@+id/button_main"
+		android:layout_toStartOf="@+id/button_main"
+		android:inputType="textCapSentences"
+		android:hint="@string/editText_main" /&gt;
+
+&lt;/LinearLayout&gt;
+							</pre>
+						</p>
+					</div>
+					<div class="box">
+						<h3>RelativeLayout</h3>
+						<p>
+							In activity_main.xml coding:
+							<pre>
+&lt;RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity"&gt;
+
+	&lt;TextView
+        android:id="@+id/instruction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/instruction_text"
+        android:textStyle="bold"
+        android:padding="@dimen/text_padding"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:textColor="@android:color/holo_red_light"/&gt;
+
+    &lt;EditText
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/text_padding"
+        android:hint="Customer Name"
+        android:layout_below="@+id/instruction"
+        android:layout_alignParentStart="true" /&gt;
+    &lt;EditText
+        android:id="@+id/email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/text_padding"
+        android:hint="Email"
+        android:layout_below="@+id/name"
+        android:layout_alignParentStart="true"
+        android:inputType="textEmailAddress"/&gt;
+		
+&lt;/RelativeLayout&gt;
+							</pre>
+						</p>
+					</div>
+				</div>
+				<div class="parentBox">
+					<h2>View Component</h2>
+					<div class="box">
+						<h3>ScrollView</h3>
+						<p>
+							Can only hold one view
+							<br>In activity_main.xml, coding:
+							<pre>
+&lt;ScrollView
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:layout_below="@id/article_subheading"&gt;
+
+&lt;/ScrollView&gt;
+							</pre>
+						</p>
+					</div>	
+					<div class="box">
+						<h3>RecyclerView</h3>
+						<p>
+							<pre>
+&lt;android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" /&gt;
+							</pre>
+						</p>
+					</div>
+					<div class="box">
+						<h3>CardView</h3>
+						<p>
+							In build.gradle file, add implementation 'com.android.support:cardview-v7:26.1.0'
+							<br>In list_item.xml, coding:
+							<pre>
+&lt;android.support.v7.widget.CardView 
+     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"&gt;
+
+    &lt;LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"&gt;
+
+    &lt;/LinearLayout&gt;
+&lt;/android.support.v7.widget.CardView&gt;
+							</pre>
+						</p>
+					</div>
+					<div class="box">
+						<h3>Spinner</h3>
+						<p>
+							In activity_main.xml, coding:
+							<pre>
+&lt;Spinner
+	android:id="@+id/label_spinner"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"&gt;
+&lt;/Spinner&gt;
+							</pre>
+						</p>
+					</div>
+					<div class="box">
+						<h3>ImageView</h3>
+						<p>
+							In activity_main.xml, coding:
+							<pre>
+&lt;ImageView
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:padding="10dp"
+	android:id="@+id/donut"
+	android:layout_below="@id/choose_dessert"
+	android:contentDescription="@string/donut"
+	android:src="@drawable/donut_circle"
+	android:onClick="showDonutOrder"/&gt;
+							</pre>
+						</p>
+					</div>
+					<div class="box">
+						<h3>Radio Button</h3>
+						<p>
+							In activity_main.xml, coding:
+							<pre>
+&lt;RadioGroup
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical"
+	android:layout_below="@id/order_intro_text"&gt;
+	
+	&lt;RadioButton
+        android:id="@+id/sameday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/same_day_messenger_service"
+        android:onClick="onRadioButtonClicked"/&gt;
+			
+&lt;/RadioGroup&gt;
+							</pre>
+						</p>
+					</div>
+					<div class="box">
+						<h3>ImageButton</h3>
+						<p>
+							Adjust layout_height & layout_width to render button properly on all device
+							<br>In activity_main.xml, coding:
+							<pre>
+&lt;ImageButton
+	android:id="@+id/decreaseTeam1"
+    android:layout_width="@dimen/button_size"
+    android:layout_height="@dimen/button_size"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    android:layout_centerVertical="true"
+    style="@style/MinusButtons"
+    android:onClick="decreaseScore" /&gt;
+							</pre>
+						</p>
+					</div>
+					<div class="box">
+						<h3>FAB</h3>
+						<p>
+							In activity_main.xml, coding:
+							<pre>
+&lt;android.support.design.widget.FloatingActionButton
+android:id="@+id/fab"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:layout_gravity="bottom|end"
+android:layout_margin="16dp"
+android:clickable="true"
+android:src="@drawable/ic_add_24dp" /&gt;
+							</pre>
+						</p>
+					</div>
+				</div>
+				<div class = "parentBox">
+					<h2>Other Components</h2>
+					<div class = "box">
+						<h3>ShapeDrawable</h3>
+						<p>
+							Primitive geometric shape (vector) defined in an XML file
+							<br>Create drawable resource file (button_background.xml), coding:
+							<pre>
+<mark>Create oval shape with outline</mark>
+&lt;shape 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval"&gt;
+        &lt;troke 
+            android:width="2dp"
+            android:color="@color/colorPrimary"/&gt;
+&lt;/shape&gt;
+
+<mark>Use ShapeDrawable on imageButton</mark>
+android:background="@drawable/button_background"
+							</pre>
+						</p>
+					</div>
+					<div class = "box">
+						<h3>Option Menu</h3>
+						<p>
+							Add item in menu_main.xml
+							<pre>
+ &lt;item
+    android:id="@+id/action_contact"
+    android:orderInCategory="100"
+    android:title="@string/action_contact"
+    app:showAsAction="never" /&gt;
+&lt;item
+    android:id="@+id/action_order"
+    android:icon="@drawable/ic_shopping_cart"
+    android:orderInCategory="10"
+    android:title="@string/action_order"
+    app:showAsAction="always" /&gt;
+&lt;item
+    android:id="@+id/action_status"
+    android:icon="@drawable/ic_status_info"
+    android:orderInCategory="20"
+    android:title="@string/action_status"
+    app:showAsAction="always" /&gt;
+&lt;item
+    android:id="@+id/action_favorites"
+    android:icon="@drawable/ic_favorite"
+    android:orderInCategory="30"
+    android:title="@string/action_favorites"
+    app:showAsAction="ifRoom" /&gt;
+							</pre>
+						</p>
+					</div>
+					<div class = "box">
+						<h3>Styles</h3>
+						<p>
+							<pre>
+&lt;style name="ScoreButtons" parent="AppTheme"&gt;
+    &lt;item 
+        name="android:background"&gt;@drawable/button_background&lt;/item&gt;
+&lt;/style&gt;
+
+&lt;style name="PlusButtons" parent="ScoreButtons"&gt;
+    &lt;item name="android:src"&gt;@drawable/ic_plus&lt;/item&gt;
+    &lt;item name=
+        "android:contentDescription"&gt;@string/plus_button_description&lt;/item&gt;
+&lt;/style&gt;
+
+&lt;style name="MinusButtons" parent="ScoreButtons"&gt;
+    &lt;item name="android:src"&gt;@drawable/ic_minus&lt;/item&gt;
+    &lt;item name=
+        "android:contentDescription"&gt;@string/minus_button_description&lt;/item&gt;
+&lt;/style&gt;
+
+&lt;style name="ScoreText"&gt;
+    &lt;item name= "android:textAppearance"&gt;@style/TextAppearance.AppCompat.Headline&lt;/item&gt;
+&lt;/style&gt;
+
+<mark>Style can be used in layout</mark>
+style="@style/ScoreText"
+							</pre>
+						</p>
+					</div>
+					<div class = "box">
+						<h3>Adaptive layout</h3>
+						<p>
+							In values file add integers.xml (initial)
+							<pre>
+&lt;integer name="grid_column_count"&gt;1&lt;/integer&gt;
+							</pre>
+							<p>
+							In integers.xml (qualifier - orientation (Landscape) & integers.xml 
+							(qualifier - smallest screen width (600dp)) //for normal phone landscape & tablet portrait
+							</p>
+							<pre>
+&lt;integer name="grid_column_count"&gt;2&lt;/integer&gt;
+							</pre>
+							<p>
+							In integers.xml (qualifier - smallest screen width (600dp) & orientation (landscape))
+							//for tablet landscape
+							</p>
+							<pre>
+&lt;integer name="grid_column_count"&gt;3&lt;/integer&gt;
+							</pre>
+						</p>
+					</div>
+					<div class = "box">
+						<h3>Localize (language)</h3>
+						<p>
+							In values resource file, add strings.xml (qualifier - locale)
+							<br>Copy paste the initial strings.xml code & change the language to other language 
+						</p>
+					</div>
+				</div>
+			</div>
+			<script>
+				var box = document.getElementsByClassName("box");
+				var header = document.getElementsByTagName("H3");
+				for (var i = 0; i < box.length; i++){
+					header[i].setAttribute("id",i);
+					header[i].setAttribute("onclick","descDisplay(this.id)");
+
+					}
+				function descDisplay(x){
+					var child = box[x].children;
+					child[0].style.color = "black";
+					for (var j = 1; j < child.length; j++){
+						if (child[j].style.display == "block"){
+							child[j].style.display = "none";
+						}
+						else{
+							child[j].style.display = "block";
+						}
+					}
+				}
+			</script>
+			<footer>
+				<small>
+					Copyright reserved &copy; Android Studio 2018<br>Created by Soo Meng Kit 
+				</small>
+			</footer>
+		</body>
+	</html>

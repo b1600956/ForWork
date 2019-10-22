@@ -1,0 +1,15 @@
+* {box-sizing:border-box; margin:0; padding:0;}
+#logo {background-color:#F62A00; color:white; font-size:40px;
+  font-family:"Palatino Linotype"; border-radius: 15px 35px; padding:0px 8px; margin:0}
+.nav-item {font-size:20px;}
+body { background-color:white; font-size:20px;}
+footer {padding:50px; background-color:lightblue; color:black; margin:0;}
+p {display:none;}
+pre {display:none; font-family:"Courier New";}
+
+h3:hover {color:black;}
+h3 {font-size:20px; color:grey; cursor:pointer;}
+.parentBox {margin:50px 0px;}
+.box {margin:20px 0px;}
+h1 {font-family:Georgia; padding-top:30px;}
+mark {background-color:#FFE5D7;}
