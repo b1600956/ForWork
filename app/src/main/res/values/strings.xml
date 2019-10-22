@@ -41,4 +41,7 @@
         <item>@drawable/workspace_img5</item>
         <item>@drawable/workspace_img6</item>
     </array>
+    <string name="title_activity_sign_in">SignInActivity</string>
+    <string name="sign_in_err_msg">Authentication Failed.Please Try Again</string>
+    <string name="menu_logout">Logout</string>
 </resources>
