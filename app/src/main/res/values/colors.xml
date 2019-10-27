@@ -4,6 +4,6 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FFAB40</color>
     <color name="white">#FFFFFF</color>
-    <color name="light_background_colour">#FAFAFA</color>
+    <color name="light_background_colour">#F5F5F5</color>
     <color name="error_msg_color">#B00020</color>
 </resources>

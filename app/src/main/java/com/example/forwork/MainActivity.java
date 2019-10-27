@@ -88,7 +88,11 @@ public class MainActivity extends AppCompatActivity {
                                 break;
 
                             case R.id.nav_create_contract:
-                                intent = new Intent(context, SignInActivity.class);
+                                intent = new Intent(context, AddWorkspaceActivity.class);
+                                break;
+
+                            case R.id.nav_feedback:
+                                intent = new Intent(context, FeedbackActivity.class);
                                 break;
 
                             case R.id.nav_logout:

@@ -28,11 +28,35 @@
             android:layout_gravity="center"
             android:src="@drawable/coworking_space_icon" />
 
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/activity_top_margin">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/user_lessor"
+                android:text="@string/user_lessor"
+                android:checked="true" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/user_lessee"
+                android:text="@string/user_lessee"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin" />
+
+        </RadioGroup>
+
         <com.google.android.gms.common.SignInButton
             android:id="@+id/google_sign_in_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/activity_top_margin" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

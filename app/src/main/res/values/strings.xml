@@ -44,4 +44,24 @@
     <string name="title_activity_sign_in">SignInActivity</string>
     <string name="sign_in_err_msg">Authentication Failed.Please Try Again</string>
     <string name="menu_logout">Logout</string>
+    <string name="user_lessor">Lessor</string>
+    <string name="user_lessee">Lessee</string>
+    <string name="feedback_string">We would like your feedback to improve our app.</string>
+    <string name="feedback_category">Select a feedback category</string>
+    <string name="feedback_suggestion">Suggestion</string>
+    <string name="feedback_complaint">Something is not quite right</string>
+    <string name="feedback_compliment">Compliment</string>
+    <string name="feedback_comment">Leave your comment here*</string>
+    <string name="feedback_sent">Feedback has been sent</string>
+    <string name="submit_btn">Submit</string>
+    <string name="next_btn">next</string>
+    <string name="contract_duration">Duration</string>
+    <string name="contract_fee">Fee</string>
+    <string name="contract_charge_rate">Charge Rate</string>
+    <string name="place_name">Place name*</string>
+    <string name="workspace_description">Description*</string>
+    <string name="workspace_address">Address*</string>
+    <string name="workspace_capacity">Capacity (people)*</string>
+    <string name="opening_hours">Opening hours*</string>
+    <string name="workspace_amenities">Amenities*</string>
 </resources>
