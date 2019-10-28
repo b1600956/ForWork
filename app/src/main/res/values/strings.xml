@@ -11,7 +11,19 @@
     <string name="search_hint">Search by place names</string>
     <string name="menu_filter">Filter</string>
     <string name="menu_search">Search by place name</string>
-    <string name="locationlist_string">alor setar,cyberjaya,george town,ipoh,jb,kl,kuching,malacca,pj,shah alam,subang jaya</string>
+    <string-array name="location_list">
+        <item>alor setar</item>
+        <item>cyberjaya</item>
+        <item>george town</item>
+        <item>ipoh</item>
+        <item>johor bahru</item>
+        <item>kuala lumpur</item>
+        <item>kuching</item>
+        <item>malacca</item>
+        <item>petaling jaya</item>
+        <item>shah alam</item>
+        <item>subang jaya</item>
+    </string-array>
     <string name="workspace_img_desc">Working space image</string>
     <string name="workspace_daily">Daily</string>
     <string name="workspace_weekly">Weekly</string>
@@ -55,8 +67,8 @@
     <string name="feedback_sent">Feedback has been sent</string>
     <string name="submit_btn">Submit</string>
     <string name="next_btn">next</string>
-    <string name="contract_duration">Duration</string>
-    <string name="contract_fee">Fee</string>
+    <string name="contract_duration">Minimum duration</string>
+    <string name="contract_fee">Fee (ETH)</string>
     <string name="contract_charge_rate">Charge Rate</string>
     <string name="place_name">Place name*</string>
     <string name="workspace_description">Description*</string>
@@ -72,6 +84,14 @@
     <string name="amenities_fragment_cancel">Cancel</string>
     <string name="create_contract">Create contract</string>
     <string name="helper_text_charge_rate">E.g. per hour/day/month</string>
+    <string name="min_duration_day">Day(s)</string>
+    <string name="min_duration_week">Week(s)</string>
+    <string name="min_duration_month">Month(s)</string>
+    <string name="filter_area">Area</string>
+    <string name="filter_fee">Maximum fee (ETH)</string>
+    <string name="filter_title">Search Filter</string>
+    <string name="filter_apply">APPLY</string>
+    <string name="min_duration">1</string>
     <string-array name="amenitiesList">
         <item>High-Speed Wifi</item>
         <item>Air Conditioning</item>
@@ -85,10 +105,11 @@
         <item>Printer</item>
         <item>Scanner</item>
     </string-array>
+    <!--
     <string-array name="chargeRateList">
         <item>per hour</item>
         <item>per day</item>
         <item>per week</item>
         <item>per month</item>
-    </string-array>
+    </string-array>-->
 </resources>

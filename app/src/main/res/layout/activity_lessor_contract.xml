@@ -10,41 +10,87 @@
     android:padding="@dimen/activity_vertical_margin"
     tools:context=".LessorContractActivity">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/contract_duration"
-        android:layout_width="match_parent"
+    <RadioGroup
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/activity_margin"
-        android:hint="@string/contract_duration"
-        app:errorEnabled="true">
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/activity_top_margin">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="text" />
-    </com.google.android.material.textfield.TextInputLayout>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/contract_daily"
+            android:text="@string/workspace_daily"
+            android:checked="true"
+            android:onClick="selectPeriod" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/contract_weekly"
+            android:text="@string/workspace_weekly"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:onClick="selectPeriod" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/contract_monthly"
+            android:text="@string/work_space_monthly"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:onClick="selectPeriod" />
+
+    </RadioGroup>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:id="@+id/contract_horizontal_layout">
+        android:id="@+id/contract_horizontal_layout"
+        android:layout_marginTop="@dimen/activity_vertical_margin">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/contract_fee"
+            android:id="@+id/contract_duration"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_margin"
+            android:hint="@string/contract_duration"
             android:layout_weight="1"
-            android:hint="@string/contract_fee"
             app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="numberDecimal" />
+                android:inputType="number"
+                android:text="@string/min_duration" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:text="@string/min_duration_day"
+            android:id="@+id/min_duration_quantifier"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:gravity="center_vertical" />
+
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/contract_fee"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/contract_fee"
+        app:errorEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="numberDecimal" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!--
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -63,7 +109,7 @@
                 android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
-    </LinearLayout>
+    </LinearLayout>-->
 
     <com.google.android.material.button.MaterialButton
         android:layout_width="wrap_content"

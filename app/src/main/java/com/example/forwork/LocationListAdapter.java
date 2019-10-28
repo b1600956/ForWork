@@ -13,16 +13,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapter.LocationViewHolder> {
-    private final LinkedList<String> mLocationList;
+    private final List<String> mLocationList;
     private final LayoutInflater mInflater;
 
     class LocationViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public final TextView locationItemView;
+        private final TextView locationItemView;
         final LocationListAdapter mAdapter;
 
-        public LocationViewHolder(View itemView, LocationListAdapter adapter) {
+        private LocationViewHolder(View itemView, LocationListAdapter adapter) {
             super(itemView);
             locationItemView = itemView.findViewById(R.id.location_item);
             this.mAdapter = adapter;
@@ -35,7 +36,7 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
         }
     }
 
-    public LocationListAdapter(Context context, LinkedList<String> locationList) {
+    public LocationListAdapter(Context context, List<String> locationList) {
         mInflater = LayoutInflater.from(context);
         this.mLocationList = locationList;
     }

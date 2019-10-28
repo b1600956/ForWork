@@ -5,11 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
@@ -21,32 +24,35 @@ public class LessorContractActivity extends AppCompatActivity {
     private String[] chargeRate;
     private ArrayAdapter<String> adapter;
     private AutoCompleteTextView spinner;
-    private TextInputLayout contract_duration;
+    private TextInputLayout contract_min_duration;
     private TextInputLayout contract_fee;
-    private TextInputLayout contract_charge_rate;
+    private TextView duration_quantifier;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lessor_contract);
+        setContentView(R.layout.activity_lessor_contract);/**
         chargeRate = getResources().getStringArray(R.array.chargeRateList);
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, chargeRate);
-        ;
         spinner = findViewById(R.id.filled_exposed_dropdown);
-        spinner.setAdapter(adapter);
-        contract_duration = findViewById(R.id.contract_duration);
+         spinner.setAdapter(adapter);**/
+        contract_min_duration = findViewById(R.id.contract_duration);
         contract_fee = findViewById(R.id.contract_fee);
-        contract_charge_rate = findViewById(R.id.charge_rate);
+        duration_quantifier = findViewById(R.id.min_duration_quantifier);
     }
 
     private boolean validateDuration() {
-        String durationStr = contract_duration.getEditText().getText().toString().trim();
+        String durationStr = contract_min_duration.getEditText().getText().toString().trim();
         if (durationStr.isEmpty()) {
-            contract_duration.setError("Field can't be empty!");
+            contract_min_duration.setError("Field can't be empty!");
             return false;
         } else {
-            contract_duration.setError(null);
-            contract_duration.setErrorEnabled(false);
+            if (Integer.parseInt(durationStr) == 0) {
+                contract_min_duration.setError("Minimum duration can't be zero!");
+                return false;
+            }
+            contract_min_duration.setError(null);
+            contract_min_duration.setErrorEnabled(false);
         }
         return true;
     }
@@ -63,28 +69,9 @@ public class LessorContractActivity extends AppCompatActivity {
         return true;
     }
 
-    private boolean validateChargeRate() {
-        String chargeRateStr = contract_charge_rate.getEditText().getText().toString().trim();
-        if (chargeRateStr.isEmpty()) {
-            contract_charge_rate.setError("Field can't be empty!");
-            return false;
-        } else {
-            List<String> list = Arrays.asList(chargeRate);
-            if (list.contains(chargeRateStr)) {
-                contract_charge_rate.setError(null);
-                contract_charge_rate.setErrorEnabled(false);
-            } else {
-                contract_charge_rate.setError("Please enter per hour/day/month!");
-                return false;
-            }
-        }
-        return true;
-    }
-
     private void clearField() {
-        contract_duration.getEditText().setText("");
+        contract_min_duration.getEditText().setText("");
         contract_fee.getEditText().setText("");
-        spinner.setText("");
     }
 
     public void createContract(View view) {
@@ -95,9 +82,30 @@ public class LessorContractActivity extends AppCompatActivity {
             inputManager.hideSoftInputFromWindow(view.getWindowToken(),
                     InputMethodManager.HIDE_NOT_ALWAYS);
         }
-        if (validateDuration() && validateFee() && validateChargeRate()) {
+        if (validateDuration() && validateFee()) {
             Snackbar.make(findViewById(R.id.lessor_contract_layout), getString(R.string.feedback_sent), Snackbar.LENGTH_LONG).show();
             clearField();
+        }
+    }
+
+    public void selectPeriod(View view) {
+        boolean checked = ((RadioButton) view).isChecked();
+        switch (view.getId()) {
+            case R.id.contract_daily:
+                if (checked)
+                    //implementation code
+                    duration_quantifier.setText(getResources().getString(R.string.min_duration_day));
+                break;
+            case R.id.contract_weekly:
+                if (checked)
+                    duration_quantifier.setText(getResources().getString(R.string.min_duration_week));
+                break;
+            case R.id.contract_monthly:
+                if (checked)
+                    duration_quantifier.setText(getResources().getString(R.string.min_duration_month));
+                break;
+            default:
+                break;
         }
     }
 }

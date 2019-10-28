@@ -132,6 +132,6 @@ public class AddWorkspaceActivity extends AppCompatActivity {
 
     public void selectAmenities(View view) {
         DialogFragment serviceFragment = new SelectAmenitiesFragment();
-        serviceFragment.show(getSupportFragmentManager(), "Amenities");
+        serviceFragment.show(getSupportFragmentManager(), getResources().getString(R.string.amenities_title));
     }
 }

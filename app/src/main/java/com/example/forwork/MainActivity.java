@@ -21,6 +21,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
@@ -33,7 +34,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
@@ -43,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView user_profile_img;
     private TextView user_name;
     private TextView user_email;
-    private final LinkedList<String> locationList = new LinkedList<>();
+    private List<String> locationList = new ArrayList<>();
     private RecyclerView workspace_list_daily;
     private RecyclerView workspace_list_weekly;
     private RecyclerView workspace_list_monthly;
@@ -109,10 +112,7 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     }
                 });
-        String locationListStr = getString(R.string.locationlist_string);
-        for (String locationItem : locationListStr.split(",")) {
-            locationList.addLast(locationItem);
-        }
+        locationList = Arrays.asList(getResources().getStringArray(R.array.location_list));
 
         mRecyclerView = findViewById(R.id.recyclerView);
         workspace_list_daily = findViewById(R.id.workspace_list_daily);
@@ -188,8 +188,10 @@ public class MainActivity extends AppCompatActivity {
             return true;
         } else if(id == android.R.id.home){
             mDrawerLayout.openDrawer(GravityCompat.START);
+        } else if (id == R.id.action_filter) {
+            DialogFragment filterFragment = new FilterFragment();
+            filterFragment.show(getSupportFragmentManager(), getResources().getString(R.string.filter_title));
         }
-
         return super.onOptionsItemSelected(item);
     }
 }
