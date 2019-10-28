@@ -91,6 +91,10 @@ public class MainActivity extends AppCompatActivity {
                                 intent = new Intent(context, AddWorkspaceActivity.class);
                                 break;
 
+                            case R.id.nav_setting:
+                                intent = new Intent(context, LessorContractActivity.class);
+                                break;
+
                             case R.id.nav_feedback:
                                 intent = new Intent(context, FeedbackActivity.class);
                                 break;

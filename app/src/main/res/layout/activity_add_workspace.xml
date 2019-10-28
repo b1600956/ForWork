@@ -65,7 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/workspace_capacity"
-            android:inputType="numberDecimal" />
+            android:inputType="number" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -87,7 +87,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_margin"
         android:text="@string/workspace_amenities"
-        android:id="@+id/amenities" />
+        android:id="@+id/amenities"
+        android:onClick="selectAmenities" />
 
     <com.google.android.material.button.MaterialButton
         android:layout_width="wrap_content"

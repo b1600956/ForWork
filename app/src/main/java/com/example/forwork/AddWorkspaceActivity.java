@@ -1,12 +1,18 @@
 package com.example.forwork;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.ArrayList;
 
 public class AddWorkspaceActivity extends AppCompatActivity {
     private TextInputLayout placeName;
@@ -97,9 +103,18 @@ public class AddWorkspaceActivity extends AppCompatActivity {
     }
 
     public void submitWorkspace(View view) {
+        InputMethodManager inputManager = (InputMethodManager)
+                getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        if (inputManager != null) {
+            inputManager.hideSoftInputFromWindow(view.getWindowToken(),
+                    InputMethodManager.HIDE_NOT_ALWAYS);
+        }
         if (validatePlaceName() && validatePlaceDesc() && validatePlaceAddress() && validatePlaceCapacity() && validateOpeningHour()) {
             Snackbar.make(findViewById(R.id.addWorkspace_layout), getString(R.string.feedback_sent), Snackbar.LENGTH_LONG).show();
             clearField();
+            Intent intent = new Intent(this, LessorContractActivity.class);
+            startActivity(intent);
         }
     }
 
@@ -109,5 +124,14 @@ public class AddWorkspaceActivity extends AppCompatActivity {
         placeAddress.getEditText().setText("");
         placeDescription.getEditText().setText("");
         placeName.getEditText().setText("");
+    }
+
+    public void getSelectedAmenities(ArrayList<String> mSelectedItems) {
+
+    }
+
+    public void selectAmenities(View view) {
+        DialogFragment serviceFragment = new SelectAmenitiesFragment();
+        serviceFragment.show(getSupportFragmentManager(), "Amenities");
     }
 }

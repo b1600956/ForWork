@@ -64,4 +64,31 @@
     <string name="workspace_capacity">Capacity (people)*</string>
     <string name="opening_hours">Opening hours*</string>
     <string name="workspace_amenities">Amenities*</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="amenities_title">Amenities</string>
+    <string name="amenities_fragment_ok">OK</string>
+    <string name="amenities_fragment_cancel">Cancel</string>
+    <string name="create_contract">Create contract</string>
+    <string name="helper_text_charge_rate">E.g. per hour/day/month</string>
+    <string-array name="amenitiesList">
+        <item>High-Speed Wifi</item>
+        <item>Air Conditioning</item>
+        <item>24hr Member Access</item>
+        <item>Catering Kitchen</item>
+        <item>Personal Lockers</item>
+        <item>Free Drinking Water</item>
+        <item>Snacks Available for Purchase</item>
+        <item>Conference Room</item>
+        <item>Computers(PCs)</item>
+        <item>Printer</item>
+        <item>Scanner</item>
+    </string-array>
+    <string-array name="chargeRateList">
+        <item>per hour</item>
+        <item>per day</item>
+        <item>per week</item>
+        <item>per month</item>
+    </string-array>
 </resources>

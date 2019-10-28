@@ -2,8 +2,10 @@ package com.example.forwork;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
@@ -31,6 +33,13 @@ public class FeedbackActivity extends AppCompatActivity {
     }
 
     public void submitFeedback(View view) {
+        InputMethodManager inputManager = (InputMethodManager)
+                getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        if (inputManager != null) {
+            inputManager.hideSoftInputFromWindow(view.getWindowToken(),
+                    InputMethodManager.HIDE_NOT_ALWAYS);
+        }
         if (validateComment()) {
             Snackbar.make(findViewById(R.id.feedback_layout), getString(R.string.feedback_sent), Snackbar.LENGTH_LONG).show();
             commentView.getEditText().setText("");
