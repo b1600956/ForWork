@@ -121,6 +121,8 @@ public class WorkSpaceAdapter extends RecyclerView.Adapter<WorkSpaceAdapter.View
         public void onClick(View view) {
             WorkSpace currentSport = workSpaceData.get(getAdapterPosition());
             Log.i("Testing", currentSport.getName());
+            Intent intent = new Intent(mContext, ViewWorkSpaceActivity.class);
+            mContext.startActivity(intent);
         }
     }
 }

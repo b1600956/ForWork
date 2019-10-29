@@ -92,6 +92,13 @@
     <string name="filter_title">Search Filter</string>
     <string name="filter_apply">APPLY</string>
     <string name="min_duration">1</string>
+    <string name="view_contract_btn">View Contract</string>
+    <string name="view_workspace_desc">About the workspace</string>
+    <string name="view_opening_hour">Opening Hour</string>
+    <string name="view_address">Address</string>
+    <string name="view_capacity">Capacity</string>
+    <string name="sign_contract_btn">sign contract</string>
+    <string name="view_min_duration">Minimum duration</string>
     <string-array name="amenitiesList">
         <item>High-Speed Wifi</item>
         <item>Air Conditioning</item>
