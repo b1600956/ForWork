@@ -19,20 +19,30 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.DialogFragment;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 public class SignInActivity extends AppCompatActivity implements View.OnClickListener {
     GoogleSignInClient mGoogleSignInClient;
     private SignInButton googleSignInBtn;
     private FirebaseAuth mAuth;
+    private DatabaseReference databaseUser;
+    private String userType;
+    private FirebaseUser user;
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 1256;
 
@@ -50,8 +60,47 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         googleSignInBtn.setSize(SignInButton.SIZE_WIDE);
         googleSignInBtn.setOnClickListener(this);
         mAuth = FirebaseAuth.getInstance();
+        databaseUser = FirebaseDatabase.getInstance().getReference("user");
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+    }
+
+    public void onStart() {
+        super.onStart();
+        // Check for existing Google Sign In account, if the user is already signed in
+// the GoogleSignInAccount will be non-null.
+        //GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        final FirebaseUser currentUser = mAuth.getCurrentUser();
+        checkUserType(currentUser);
+    }
+
+    private void checkUserType(final FirebaseUser currentUser) {
+        if (currentUser != null) {
+            databaseUser.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.child(currentUser.getUid()).getValue() == null) {
+                        selectUserType();
+                    } else if (dataSnapshot.child(currentUser.getUid()).getValue(String.class).equals(getString(R.string.user_lessee))) {
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        finish();
+                    } else {
+                        startActivity(new Intent(getApplicationContext(), LessorMainActivity.class));
+                        finish();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+    }
+
+    private void selectUserType() {
+        DialogFragment userTypeFragment = new SelectUserTypeFragment();
+        userTypeFragment.show(getSupportFragmentManager(), getString(R.string.user_type_tag));
     }
 
     @Override
@@ -109,9 +158,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(intent);
+                            user = mAuth.getCurrentUser();
+                            checkUserType(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
@@ -119,5 +167,17 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                         }
                     }
                 });
+    }
+
+    public void getSelectedUserType(String userType) {
+        this.userType = userType;
+        databaseUser.child(user.getUid()).setValue(userType);
+        if (userType.equals(getResources().getString(R.string.user_lessor))) {
+            startActivity(new Intent(getApplicationContext(), LessorMainActivity.class));
+            finish();
+        } else {
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            finish();
+        }
     }
 }

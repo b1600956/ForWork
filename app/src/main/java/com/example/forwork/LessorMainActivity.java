@@ -1,69 +1,51 @@
 package com.example.forwork;
 
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.DialogFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
-import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class LessorMainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     final Context context = this;
     private RecyclerView mRecyclerView;
-    private LocationListAdapter mAdapter;
     private ImageView user_profile_img;
     private TextView user_name;
     private TextView user_email;
-    private List<String> locationList = new ArrayList<>();
-    private RecyclerView workspace_list_daily;
-    private RecyclerView workspace_list_weekly;
-    private RecyclerView workspace_list_monthly;
-    private ArrayList<WorkSpace> workSpaceData;
-    private WorkSpaceAdapter workSpaceAdapter;
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_lessor_main);
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -71,21 +53,21 @@ public class MainActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.lessor_nav_view);
         View headerView = navigationView.getHeaderView(0);
         user_profile_img = headerView.findViewById(R.id.profile_img);
         user_name = headerView.findViewById(R.id.user_name);
         user_email = headerView.findViewById(R.id.user_email);
-        mDrawerLayout = findViewById(R.id.drawer);
-        navigationView.getMenu().findItem(R.id.nav_my_contract).setVisible(true);
-        navigationView.getMenu().findItem(R.id.nav_create_contract).setVisible(false);
+        mDrawerLayout = findViewById(R.id.lessor_drawer);
+        navigationView.getMenu().findItem(R.id.nav_my_contract).setVisible(false);
+        navigationView.getMenu().findItem(R.id.nav_create_contract).setVisible(true);
         mAuth = FirebaseAuth.getInstance();
         // Adding menu icon to Toolbar
         ActionBar supportActionBar = getSupportActionBar();
         if (supportActionBar != null) {
             VectorDrawableCompat indicator =
                     VectorDrawableCompat.create(getResources(), R.drawable.ic_menu, getTheme());
-            indicator.setTint(ResourcesCompat.getColor(getResources(),R.color.white,getTheme()));
+            indicator.setTint(ResourcesCompat.getColor(getResources(), R.color.white, getTheme()));
             supportActionBar.setHomeAsUpIndicator(indicator);
             supportActionBar.setDisplayHomeAsUpEnabled(true);
         }
@@ -98,9 +80,9 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = null;
                         // Set item in checked state
                         menuItem.setChecked(true);
-                        switch(menuItem.getItemId()){
-                            case R.id.nav_my_contract:
-                                intent = new Intent(context, MyContractsActivity.class);
+                        switch (menuItem.getItemId()) {
+                            case R.id.nav_create_contract:
+                                intent = new Intent(context, AddWorkspaceActivity.class);
                                 break;
 
                             case R.id.nav_setting:
@@ -122,24 +104,6 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     }
                 });
-        locationList = Arrays.asList(getResources().getStringArray(R.array.location_list));
-
-        mRecyclerView = findViewById(R.id.recyclerView);
-        workspace_list_daily = findViewById(R.id.workspace_list_daily);
-        workspace_list_monthly = findViewById(R.id.workspace_list_monthly);
-        workspace_list_weekly = findViewById(R.id.workspace_list_weekly);
-        mAdapter = new LocationListAdapter(this, locationList);
-        workSpaceData = new ArrayList<>();
-        workSpaceAdapter = new WorkSpaceAdapter(this, workSpaceData);
-        mRecyclerView.setAdapter(mAdapter);
-        workspace_list_daily.setAdapter(workSpaceAdapter);
-        workspace_list_weekly.setAdapter(workSpaceAdapter);
-        workspace_list_monthly.setAdapter(workSpaceAdapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        workspace_list_daily.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        workspace_list_weekly.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        workspace_list_monthly.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        initializeWorkspaceData();
     }
 
     public void onStart() {
@@ -157,31 +121,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void initializeWorkspaceData() {
-        String[] workspaceList = getResources().getStringArray(R.array.workspace_names);
-        String[] workspaceAddress = getResources().getStringArray(R.array.workspace_address);
-        TypedArray workspaceImg = getResources().obtainTypedArray(R.array.workspace_images);
-        workSpaceData.clear();
-        for (int i = 0; i < workspaceList.length; i++) {
-            workSpaceData.add(new WorkSpace(workspaceList[i], workspaceAddress[i], workspaceImg.getResourceId(i, 0)));
-        }
-        workspaceImg.recycle();
-        workSpaceAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        // Get the SearchView and set the searchable configuration
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView menu_searchView = (SearchView) searchItem.getActionView();
-        // Assumes current activity is the searchable activity
-        menu_searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        return true;
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -190,15 +129,12 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_search) {
-            item.collapseActionView();
-            return true;
-        } else if(id == android.R.id.home){
+        if (id == android.R.id.home) {
             mDrawerLayout.openDrawer(GravityCompat.START);
-        } else if (id == R.id.action_filter) {
-            DialogFragment filterFragment = new FilterFragment();
-            filterFragment.show(getSupportFragmentManager(), getResources().getString(R.string.filter_title));
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void addWorkSpace(View view) {
     }
 }

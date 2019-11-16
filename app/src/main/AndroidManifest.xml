@@ -3,6 +3,7 @@
     package="com.example.forwork">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -11,14 +12,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ViewContractActivity"></activity>
+        <activity
+            android:name=".LessorMainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".ViewContractActivity" />
         <activity android:name=".ViewWorkSpaceActivity" />
         <activity
             android:name=".SignInActivity"
-            android:label="@string/title_activity_sign_in"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -26,6 +27,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -36,7 +42,7 @@
         </activity>
         <activity
             android:name=".MyContractsActivity"
-            android:label="My Contracts"
+            android:label="@string/my_contract_label"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -44,7 +50,7 @@
         </activity>
         <activity
             android:name=".FeedbackActivity"
-            android:label="Feedback"
+            android:label="@string/feedback_label"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -52,7 +58,7 @@
         </activity>
         <activity
             android:name=".LessorContractActivity"
-            android:label="Create Contract"
+            android:label="@string/create_contract"
             android:parentActivityName=".AddWorkspaceActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -60,7 +66,7 @@
         </activity>
         <activity
             android:name=".AddWorkspaceActivity"
-            android:label="Add Your Workspace"
+            android:label="@string/add_coworkspace"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

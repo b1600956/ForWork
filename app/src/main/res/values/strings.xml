@@ -2,7 +2,7 @@
     <string name="app_name">ForWork</string>
     <string name="action_settings">Settings</string>
     <string name="menu_my_contract">My Contracts</string>
-    <string name="menu_create_contract">Create Contract</string>
+    <string name="menu_create_contract">Add Co-Workspace</string>
     <string name="menu_feedback">Feedback</string>
     <string name="menu_setting">Setting</string>
     <string name="nav_header_desc">Navigation header</string>
@@ -112,6 +112,22 @@
         <item>Printer</item>
         <item>Scanner</item>
     </string-array>
+    <string-array name="userType">
+        <item>Lessor</item>
+        <item>Lessee</item>
+    </string-array>
+    <string name="title_activity_lessor_main">LessorMainActivity</string>
+    <string name="upload_images">Upload Images*</string>
+    <string name="img_file_type">image/*</string>
+    <string name="display_selected_count">\u0020(\u0020</string>
+    <string name="display_selected_text">\u0020selected)</string>
+    <string name="upload_img_alert">Please upload at least one workspace image</string>
+    <string name="select_amenities_alert">Please select the amenities</string>
+    <string name="add_coworkspace">Add Your Co-Workspace</string>
+    <string name="feedback_label">Feedback</string>
+    <string name="my_contract_label">My Contracts</string>
+    <string name="choose_user_type">You are</string>
+    <string name="user_type_tag">UserType</string>
     <!--
     <string-array name="chargeRateList">
         <item>per hour</item>
