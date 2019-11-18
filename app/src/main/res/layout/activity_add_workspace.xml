@@ -7,6 +7,7 @@
     android:orientation="vertical"
     android:id="@+id/addWorkspace_layout"
     android:background="@color/light_background_colour"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".AddWorkspaceActivity">
 
     <com.google.android.material.textfield.TextInputLayout
@@ -85,10 +86,19 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_margin"
+        android:layout_marginTop="@dimen/activity_margin"
+        android:layout_marginHorizontal="@dimen/activity_margin"
         android:text="@string/workspace_amenities"
         android:id="@+id/amenities"
         android:onClick="selectAmenities" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_margin"
+        android:text="@string/upload_images"
+        android:id="@+id/images"
+        android:onClick="uploadImages" />
 
     <com.google.android.material.button.MaterialButton
         android:layout_width="wrap_content"

@@ -79,9 +79,9 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             databaseUser.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.child(currentUser.getUid()).getValue() == null) {
+                    if (dataSnapshot.child(currentUser.getUid()).child("userType").getValue() == null) {
                         selectUserType();
-                    } else if (dataSnapshot.child(currentUser.getUid()).getValue(String.class).equals(getString(R.string.user_lessee))) {
+                    } else if (dataSnapshot.child(currentUser.getUid()).child("userType").getValue(String.class).equals(getString(R.string.user_lessee))) {
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         finish();
                     } else {
@@ -128,6 +128,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             handleSignInResult(task);
         } else {
             displayError();
+            Log.d(TAG, "dun");
         }
     }
 
@@ -171,7 +172,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
     public void getSelectedUserType(String userType) {
         this.userType = userType;
-        databaseUser.child(user.getUid()).setValue(userType);
+        databaseUser.child(user.getUid()).child("userType").setValue(userType);
         if (userType.equals(getResources().getString(R.string.user_lessor))) {
             startActivity(new Intent(getApplicationContext(), LessorMainActivity.class));
             finish();

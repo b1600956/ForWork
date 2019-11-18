@@ -100,6 +100,7 @@ public class LessorMainActivity extends AppCompatActivity {
                                 break;
                         }
                         startActivity(intent);
+                        finish();
                         mDrawerLayout.closeDrawers();
                         return true;
                     }
