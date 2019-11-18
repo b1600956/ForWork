@@ -67,10 +67,10 @@
         <activity
             android:name=".AddWorkspaceActivity"
             android:label="@string/add_coworkspace"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".LessorMainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.forwork.MainActivity" />
+                android:value="com.example.forwork.LessorMainActivity" />
         </activity>
     </application>
 
