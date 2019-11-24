@@ -122,4 +122,11 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Button"
         style="@style/Widget.MaterialComponents.Button" />
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
 </LinearLayout>

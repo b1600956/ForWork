@@ -2,54 +2,50 @@ package com.example.forwork;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
-import org.web3j.crypto.Credentials;
-import org.web3j.crypto.ECKeyPair;
-import org.web3j.protocol.Web3j;
-import org.web3j.protocol.core.RemoteCall;
-import org.web3j.protocol.http.HttpService;
-import org.web3j.tx.Contract;
-import org.web3j.tx.TransactionManager;
-import org.web3j.tx.gas.DefaultGasProvider;
-import org.web3j.tx.response.NoOpProcessor;
 
 import java.math.BigInteger;
-import java.util.Arrays;
-import java.util.List;
+
 
 public class LessorContractActivity extends AppCompatActivity {
-    private String[] chargeRate;
-    private ArrayAdapter<String> adapter;
-    private AutoCompleteTextView spinner;
     private TextInputLayout contract_min_duration;
     private TextInputLayout contract_fee;
     private TextView duration_quantifier;
     private String workspaceId;
-    private static Web3j web3;
-    private Credentials credentials;
     private int minDuration;
     private int contractFee;
     private String rateOfCharge;
+    private ProgressBar progressBar;
+    private Button btn;
+    private String privateKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lessor_contract);
-        Log.d("Q", "dun");/**
+        /**
         chargeRate = getResources().getStringArray(R.array.chargeRateList);
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, chargeRate);
         spinner = findViewById(R.id.filled_exposed_dropdown);
@@ -59,10 +55,8 @@ public class LessorContractActivity extends AppCompatActivity {
         contract_min_duration = findViewById(R.id.contract_duration);
         contract_fee = findViewById(R.id.contract_fee);
         duration_quantifier = findViewById(R.id.min_duration_quantifier);
-        web3 = Web3j.build(new HttpService());
-        BigInteger privkey = new BigInteger("5F5766F42F4CC164D13AEE4A88EC447A3833A963DBA36FE46CF43593858D9AF2", 16);
-        ECKeyPair ecKeyPair = ECKeyPair.create(privkey);
-        credentials = Credentials.create(ecKeyPair);
+        progressBar = findViewById(R.id.progressBar);
+        btn = findViewById(R.id.create_contract);
         rateOfCharge = getString(R.string.workspace_daily);
     }
 
@@ -110,17 +104,54 @@ public class LessorContractActivity extends AppCompatActivity {
                     InputMethodManager.HIDE_NOT_ALWAYS);
         }
         if (validateDuration() && validateFee()) {
-            clearField();
-            RemoteCall<LeaseContract> request = LeaseContract.deploy(web3, credentials, DefaultGasProvider.GAS_PRICE,
-                    DefaultGasProvider.GAS_LIMIT, BigInteger.valueOf(minDuration), BigInteger.valueOf(contractFee), rateOfCharge, workspaceId);
-            LeaseContract contract;
-            try {
-                contract = request.send();
-                String contractAddress = contract.getDeployedAddress("3");
-                Snackbar.make(findViewById(R.id.lessor_contract_layout), contractAddress, Snackbar.LENGTH_LONG).show();
-            } catch (Exception e) {
-                e.printStackTrace();
+            getPrivateKey();
+        }
+    }
+
+    private void getPrivateKey() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Title");
+
+// Set up the input
+        final EditText input = new EditText(this);
+// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+        builder.setTitle("Enter your private key");
+// Set up the buttons
+        builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                privateKey = input.getText().toString();
+                if (privateKey != null && !privateKey.isEmpty())
+                    createAnotherContract();
             }
+        }).setNegativeButton(R.string.amenities_fragment_cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+
+            }
+        });
+        builder.show();
+    }
+
+    private void createAnotherContract() {
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = null;
+        if (connMgr != null) {
+            networkInfo = connMgr.getActiveNetworkInfo();
+        }
+        if (networkInfo != null && networkInfo.isConnected()) {
+            Log.d("TAG", privateKey);
+            if (privateKey != null) {
+                new CreateContract(progressBar, Snackbar.make(findViewById(R.id.lessor_contract_layout), "", Snackbar.LENGTH_LONG), this)
+                        .execute(new Contract(rateOfCharge, workspaceId, BigInteger.valueOf(minDuration), BigInteger.valueOf(contractFee), privateKey));
+                Log.d("TAG", "what");
+                progressBar.setVisibility(View.VISIBLE);
+                btn.setVisibility(View.GONE);
+            }
+        } else {
+            Snackbar.make(findViewById(R.id.lessor_contract_layout), "Failed to connect Internet! Please check your Internet connection", Snackbar.LENGTH_LONG);
         }
     }
 
