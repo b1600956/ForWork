@@ -1,5 +1,6 @@
 package com.example.forwork;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
@@ -12,8 +13,12 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,9 +27,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.UUID;
 
 public class AddWorkspaceActivity extends AppCompatActivity {
@@ -33,6 +40,7 @@ public class AddWorkspaceActivity extends AppCompatActivity {
     private TextInputLayout placeAddress;
     private TextInputLayout placeCapacity;
     private TextInputLayout placeOpeningHour;
+    private TextInputLayout placeLocation;
     private ArrayList<Uri> imgList;
     private ArrayList<String> amenitiesList;
     private Button amenitiesBtn;
@@ -47,6 +55,11 @@ public class AddWorkspaceActivity extends AppCompatActivity {
     private String addressStr;
     private int capacity;
     private String openingHourStr;
+    private String locationStr;
+    private int count;
+    private String[] locationArray;
+    private ArrayAdapter<String> adapter;
+    private AutoCompleteTextView location_spinner;
     public static final String MESSAGE = "com.example.android.forwork.MESSAGE";
 
     @Override
@@ -58,8 +71,13 @@ public class AddWorkspaceActivity extends AppCompatActivity {
         placeAddress = findViewById(R.id.place_address);
         placeCapacity = findViewById(R.id.place_capacity);
         placeOpeningHour = findViewById(R.id.opening_hour);
+        placeLocation = findViewById(R.id.place_location);
         amenitiesBtn = findViewById(R.id.amenities);
         uploadImgBtn = findViewById(R.id.images);
+        location_spinner = findViewById(R.id.location_state_dropdown);
+        locationArray = getResources().getStringArray(R.array.location_list);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, locationArray);
+        location_spinner.setAdapter(adapter);
         imgList = new ArrayList<>();
         amenitiesList = new ArrayList<>();
         storageReference = FirebaseStorage.getInstance().getReference("Co-Workspace");
@@ -75,7 +93,6 @@ public class AddWorkspaceActivity extends AppCompatActivity {
             return false;
         } else {
             placeName.setError(null);
-            placeName.setErrorEnabled(false);
         }
         return true;
     }
@@ -87,7 +104,6 @@ public class AddWorkspaceActivity extends AppCompatActivity {
             return false;
         } else {
             placeDescription.setError(null);
-            placeDescription.setErrorEnabled(false);
         }
         return true;
     }
@@ -99,7 +115,6 @@ public class AddWorkspaceActivity extends AppCompatActivity {
             return false;
         } else {
             placeAddress.setError(null);
-            placeAddress.setErrorEnabled(false);
         }
         return true;
     }
@@ -117,7 +132,6 @@ public class AddWorkspaceActivity extends AppCompatActivity {
                 return false;
             } else {
                 placeCapacity.setError(null);
-                placeCapacity.setErrorEnabled(false);
             }
             return true;
         } catch (NumberFormatException nfe) {
@@ -133,7 +147,20 @@ public class AddWorkspaceActivity extends AppCompatActivity {
             return false;
         } else {
             placeOpeningHour.setError(null);
-            placeOpeningHour.setErrorEnabled(false);
+        }
+        return true;
+    }
+
+    private boolean validateLocation() {
+        locationStr = location_spinner.getText().toString().trim();
+        if (locationStr.isEmpty()) {
+            placeLocation.setError("Field can't be empty!");
+            return false;
+        } else {
+            if (!Arrays.asList(locationArray).contains(locationStr.toLowerCase())) {
+                locationStr = "others";
+            }
+            placeOpeningHour.setError(null);
         }
         return true;
     }
@@ -146,21 +173,47 @@ public class AddWorkspaceActivity extends AppCompatActivity {
             inputManager.hideSoftInputFromWindow(view.getWindowToken(),
                     InputMethodManager.HIDE_NOT_ALWAYS);
         }
-        if (validatePlaceName() && validatePlaceDesc() && validatePlaceAddress() && validatePlaceCapacity() && validateOpeningHour()) {
-            if (imgList.isEmpty()) {
-                Snackbar.make(findViewById(R.id.addWorkspace_layout), getString(R.string.upload_img_alert), Snackbar.LENGTH_LONG).show();
-            } else if (amenitiesList.isEmpty()) {
+        if (validatePlaceName() && validatePlaceDesc() && validatePlaceAddress() && validateLocation() && validatePlaceCapacity() && validateOpeningHour()) {
+            if (amenitiesList.isEmpty()) {
                 Snackbar.make(findViewById(R.id.addWorkspace_layout), getString(R.string.select_amenities_alert), Snackbar.LENGTH_LONG).show();
+            } else if (imgList.isEmpty()) {
+                Snackbar.make(findViewById(R.id.addWorkspace_layout), getString(R.string.upload_img_alert), Snackbar.LENGTH_LONG).show();
             } else {
-                WorkSpace workspace = new WorkSpace(nameStr, descStr, addressStr, capacity, openingHourStr, amenitiesList, user.getUid());
+                WorkSpace workspace = new WorkSpace(nameStr, descStr, addressStr, capacity, openingHourStr, amenitiesList, user.getUid(), locationStr);
                 String workSpaceId = workspaceDB.push().getKey();
                 workspaceDB.child(workSpaceId).setValue(workspace);
-                userDB.child("co-workspace").setValue(workSpaceId);
+                ArrayList<String> imgUrl = new ArrayList<>();
+                Log.d("TAG", imgList.size() + "JJ");
+                count = 0;
                 for (Uri img : imgList) {
-                    storageReference.child(workSpaceId + "/" + UUID.randomUUID().toString()).putFile(img);
+                    StorageReference imgStorage = storageReference.child(workSpaceId + "/" + UUID.randomUUID().toString());
+                    imgStorage.putFile(img)
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d("TAG", "Failed to upload images");
+                                }
+                            })
+                            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    imgStorage.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri) {
+                                            imgUrl.add(String.valueOf(uri));
+                                            Log.d("TAG", String.valueOf(uri) + "LK");
+                                            Log.d("TAG", imgUrl.size() + "cc");
+                                            Log.d("TAG", imgList.indexOf(img) + "jj");
+                                            if (count == (imgList.size() - 1)) {
+                                                workspaceDB.child(workSpaceId + "/imageList").setValue(imgUrl);
+                                            }
+                                            count++;
+                                        }
+                                    });
+                                }
+                            });
                 }
-                clearField();
-                Snackbar.make(findViewById(R.id.addWorkspace_layout), getString(R.string.upload_img_alert), Snackbar.LENGTH_LONG).show();
+                startActivity(new Intent(this, LessorContractActivity.class).putExtra(MESSAGE, workSpaceId));
             }
         }
     }

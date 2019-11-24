@@ -23,6 +23,7 @@
         <item>petaling jaya</item>
         <item>shah alam</item>
         <item>subang jaya</item>
+        <item>others</item>
     </string-array>
     <string name="workspace_img_desc">Working space image</string>
     <string name="workspace_daily">Daily</string>
@@ -128,6 +129,7 @@
     <string name="my_contract_label">My Contracts</string>
     <string name="choose_user_type">You are</string>
     <string name="user_type_tag">UserType</string>
+    <string name="location_states">Location (States)*</string>
     <!--
     <string-array name="chargeRateList">
         <item>per hour</item>
