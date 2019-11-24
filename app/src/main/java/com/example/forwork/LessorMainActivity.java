@@ -2,6 +2,8 @@ package com.example.forwork;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import com.bumptech.glide.Glide;
@@ -13,6 +15,11 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,12 +30,29 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.web3j.crypto.Credentials;
+import org.web3j.crypto.ECKeyPair;
+import org.web3j.crypto.Keys;
+import org.web3j.protocol.Web3j;
+import org.web3j.protocol.http.HttpService;
+import org.web3j.tx.FastRawTransactionManager;
+import org.web3j.tx.TransactionManager;
+import org.web3j.tx.gas.DefaultGasProvider;
+import org.web3j.tx.response.NoOpProcessor;
+
+import java.math.BigInteger;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,8 +63,19 @@ public class LessorMainActivity extends AppCompatActivity {
     private ImageView user_profile_img;
     private TextView user_name;
     private TextView user_email;
+    private TextView noWorkspace;
+    private Button addWorkSpaceBtn;
+    private RelativeLayout userWorkspace;
+    private TextView workSpaceName;
+    private TextView workSpaceAddress;
+    private TextView workSpaceStatus;
+    private ImageView workSpaceImg;
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
+    private String contractAddress;
+    private static Web3j web3;
+    private DatabaseReference database;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +96,16 @@ public class LessorMainActivity extends AppCompatActivity {
         mDrawerLayout = findViewById(R.id.lessor_drawer);
         navigationView.getMenu().findItem(R.id.nav_my_contract).setVisible(false);
         navigationView.getMenu().findItem(R.id.nav_create_contract).setVisible(true);
+        noWorkspace = findViewById(R.id.noWorkSpaceTxt);
+        addWorkSpaceBtn = findViewById(R.id.addCoworkspaceBtn);
+        workSpaceName = findViewById(R.id.workSpace_name);
+        workSpaceAddress = findViewById(R.id.workSpace_address);
+        workSpaceStatus = findViewById(R.id.workSpace_status);
+        workSpaceImg = findViewById(R.id.workSpace_img);
+        userWorkspace = findViewById(R.id.user_WorkSpace);
         mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+        database = FirebaseDatabase.getInstance().getReference();
         // Adding menu icon to Toolbar
         ActionBar supportActionBar = getSupportActionBar();
         if (supportActionBar != null) {
@@ -104,7 +148,40 @@ public class LessorMainActivity extends AppCompatActivity {
                         mDrawerLayout.closeDrawers();
                         return true;
                     }
-                });
+                });/*
+        ConnectivityManager connMgr = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = null;
+        if(connMgr != null){
+            networkInfo = connMgr.getActiveNetworkInfo();
+        }
+        if(networkInfo != null && networkInfo.isConnected()){
+            new ViewContract(minD, f, chargeRate)
+                        .execute();
+        }else{
+            Snackbar.make(findViewById(R.id.lessor_contract_layout),"Failed to connect Internet! Please check your Internet connection",Snackbar.LENGTH_LONG);
+        }*/
+        database.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String coworkspaceId = dataSnapshot.child("user/" + user.getUid() + "/coworkspace").getValue(String.class);
+                if (coworkspaceId == null) {
+                    userWorkspace.setVisibility(View.INVISIBLE);
+                    noWorkspace.setVisibility(View.VISIBLE);
+                    noWorkspace.setText("Currently, you do not have any co-workspace yet. Please add one to view your workspace");
+                    addWorkSpaceBtn.setVisibility(View.VISIBLE);
+                } else {
+                    WorkSpace workspace = dataSnapshot.child("Co-Workspace/" + coworkspaceId).getValue(WorkSpace.class);
+                    workSpaceName.setText(workspace.getName());
+                    workSpaceAddress.setText(workspace.getAddress());
+                    workSpaceStatus.setText(workspace.getStatus());
+                    Glide.with(getApplicationContext()).load(workspace.getImageList().get(0)).into(workSpaceImg);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 
     public void onStart() {
@@ -137,5 +214,7 @@ public class LessorMainActivity extends AppCompatActivity {
     }
 
     public void addWorkSpace(View view) {
+        startActivity(new Intent(this, AddWorkspaceActivity.class));
+        finish();
     }
 }
