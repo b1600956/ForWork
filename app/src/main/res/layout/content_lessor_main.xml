@@ -44,22 +44,19 @@
             android:id="@+id/workSpace_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:text="TX Space" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <ImageView
             android:id="@+id/workSpace_img"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:layout_below="@+id/workSpace_name"
-            android:src="@drawable/workspace_img2" />
+            android:layout_below="@+id/workSpace_name" />
 
         <TextView
             android:id="@+id/workSpace_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy"
             android:layout_below="@+id/workSpace_img" />
 
         <TextView
@@ -72,8 +69,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/activity_margin"
             android:layout_marginRight="@dimen/activity_margin"
-            android:textColor="@color/colorAccent"
-            android:text="Available" />
+            android:textColor="@color/colorAccent" />
 
 
     </RelativeLayout>
