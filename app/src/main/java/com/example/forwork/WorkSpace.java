@@ -1,16 +1,28 @@
 package com.example.forwork;
 
+import androidx.annotation.NonNull;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import java.util.ArrayList;
 
 public class WorkSpace {
     private String name;
     private String address;
-    private int image;
     private String description;
     private int capacity;
     private String opening_hour;
     private ArrayList<String> amenities;
     private String lessor;
+    private String contractAddress;
+    private String status;
+    private int image;
+    private ArrayList<String> imageList;
+    private String location;
 
     public WorkSpace() {
     }
@@ -21,7 +33,7 @@ public class WorkSpace {
         setImage(image);
     }
 
-    public WorkSpace(String name, String description, String address, int capacity, String opening_hour, ArrayList<String> amenities, String lessor) {
+    public WorkSpace(String name, String description, String address, int capacity, String opening_hour, ArrayList<String> amenities, String lessor, String location) {
         setName(name);
         setAddress(address);
         setDescription(description);
@@ -29,6 +41,56 @@ public class WorkSpace {
         setOpening_hour(opening_hour);
         setAmenities(amenities);
         setLessor(lessor);
+        setContractAddress("");
+        setStatus("Available");
+        setLocation(location);
+        setImageList(new ArrayList<>());
+    }
+
+    public WorkSpace(String name, String description, String address, int capacity, String opening_hour, ArrayList<String> amenities, String lessor, String location, ArrayList<String> imageList) {
+        setName(name);
+        setAddress(address);
+        setDescription(description);
+        setCapacity(capacity);
+        setOpening_hour(opening_hour);
+        setAmenities(amenities);
+        setLessor(lessor);
+        setContractAddress("");
+        setStatus("Available");
+        setLocation(location);
+        setImageList(imageList);
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public ArrayList<String> getImageList() {
+        return imageList;
+    }
+
+    public void setImageList(ArrayList<String> imageList) {
+        this.imageList = imageList;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getContractAddress() {
+        return contractAddress;
+    }
+
+    public void setContractAddress(String contractAddress) {
+        this.contractAddress = contractAddress;
     }
 
     public String getLessor() {
@@ -93,5 +155,9 @@ public class WorkSpace {
 
     public void setImage(int image) {
         this.image = image;
+    }
+
+    public void addImage(String imageUrl) {
+        this.imageList.add(imageUrl);
     }
 }
