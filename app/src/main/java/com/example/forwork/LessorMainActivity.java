@@ -30,6 +30,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -76,6 +77,8 @@ public class LessorMainActivity extends AppCompatActivity {
     private static Web3j web3;
     private DatabaseReference database;
     private FirebaseUser user;
+    public static final String MESSAGE3 = "com.example.android.forwork.MESSAGE3";
+    private WorkSpace workspace;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,18 +151,8 @@ public class LessorMainActivity extends AppCompatActivity {
                         mDrawerLayout.closeDrawers();
                         return true;
                     }
-                });/*
-        ConnectivityManager connMgr = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = null;
-        if(connMgr != null){
-            networkInfo = connMgr.getActiveNetworkInfo();
-        }
-        if(networkInfo != null && networkInfo.isConnected()){
-            new ViewContract(minD, f, chargeRate)
-                        .execute();
-        }else{
-            Snackbar.make(findViewById(R.id.lessor_contract_layout),"Failed to connect Internet! Please check your Internet connection",Snackbar.LENGTH_LONG);
-        }*/
+                });
+
         database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -170,7 +163,7 @@ public class LessorMainActivity extends AppCompatActivity {
                     noWorkspace.setText("Currently, you do not have any co-workspace yet. Please add one to view your workspace");
                     addWorkSpaceBtn.setVisibility(View.VISIBLE);
                 } else {
-                    WorkSpace workspace = dataSnapshot.child("Co-Workspace/" + coworkspaceId).getValue(WorkSpace.class);
+                    workspace = dataSnapshot.child("Co-Workspace/" + coworkspaceId).getValue(WorkSpace.class);
                     workSpaceName.setText(workspace.getName());
                     workSpaceAddress.setText(workspace.getAddress());
                     workSpaceStatus.setText(workspace.getStatus());
@@ -216,5 +209,9 @@ public class LessorMainActivity extends AppCompatActivity {
     public void addWorkSpace(View view) {
         startActivity(new Intent(this, AddWorkspaceActivity.class));
         finish();
+    }
+
+    public void viewWorkspaceDetail(View view) {
+        startActivity(new Intent(this, LessorWorkspaceDetailActivity.class).putExtra(MESSAGE3, (Parcelable) workspace));
     }
 }

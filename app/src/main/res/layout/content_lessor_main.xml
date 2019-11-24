@@ -37,7 +37,8 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:elevation="@dimen/elevation"
-        android:layout_marginTop="@dimen/activity_top_margin">
+        android:layout_marginTop="@dimen/activity_top_margin"
+        android:onClick="viewWorkspaceDetail">
 
         <TextView
             android:id="@+id/workSpace_name"

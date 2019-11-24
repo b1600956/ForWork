@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/light_background_colour"
+    tools:context=".LessorWorkspaceDetailActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_margin">
+
+            <TextView
+                android:id="@+id/lessor_workspace_detail_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vladimir Nabokov"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
+            <ImageView
+                android:id="@+id/lessor_workspace_detail_img"
+                android:layout_width="match_parent"
+                android:layout_height="272dp"
+                android:src="@drawable/workspace_img5" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/view_workspace_desc"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:layout_marginBottom="@dimen/activity_top_margin" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/lessor_workspace_detail_description"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:layout_marginBottom="@dimen/margin_bottom"
+                android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:text="Status"
+                android:layout_marginBottom="@dimen/activity_top_margin" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/lessor_workspace_detail_status"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:layout_marginBottom="@dimen/margin_bottom"
+                android:text="Available" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:text="@string/view_address"
+                android:layout_marginBottom="@dimen/activity_top_margin" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/lessor_workspace_detail_address"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:layout_marginBottom="@dimen/margin_bottom"
+                android:text="Level 20, 1-chōme-6-2 Marunouchi, Chiyoda City, Tōkyō-to 100-0005, Japan, Tokyo, Japan" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:text="@string/view_opening_hour"
+                android:layout_marginBottom="@dimen/activity_top_margin" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:layout_marginBottom="@dimen/margin_bottom"
+                android:id="@+id/lessor_workspace_detail_openingHour"
+                android:text="Mon-Fri   9:00 am - 6:00pm\nSat   Closed\nSun   Closed" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:text="@string/view_capacity"
+                android:layout_marginBottom="@dimen/activity_top_margin" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:layout_marginBottom="@dimen/margin_bottom"
+                android:id="@+id/lessor_workspace_detail_capacity"
+                android:text="30 people" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:text="Images"
+                android:layout_marginBottom="@dimen/activity_top_margin" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/workspaceImg_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginBottom="@dimen/margin_bottom" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:text="@string/amenities_title"
+                android:layout_marginBottom="@dimen/activity_top_margin" />
+
+            <LinearLayout
+                android:id="@+id/lessor_workspace_detail_amenities"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="@dimen/activity_margin">
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:elevation="@dimen/elevation">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Contract"
+                    android:paddingTop="@dimen/activity_margin"
+                    android:layout_marginBottom="@dimen/margin_bottom"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                <ProgressBar
+                    android:id="@+id/lessor_contract_progressBar"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    android:text="Contract Address"
+                    android:id="@+id/contract_address_label"
+                    android:layout_marginBottom="@dimen/activity_top_margin"
+                    android:visibility="invisible" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:id="@+id/lessor_contract_address"
+                    android:layout_marginBottom="@dimen/margin_bottom"
+                    android:visibility="invisible" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    android:text="Minimum Duration"
+                    android:id="@+id/minDuration_label"
+                    android:layout_marginBottom="@dimen/activity_top_margin"
+                    android:visibility="invisible" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_marginBottom="@dimen/margin_bottom"
+                    android:id="@+id/lessor_contract_minDuration" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    android:id="@+id/contract_fee_label"
+                    android:text="Fee"
+                    android:layout_marginBottom="@dimen/activity_top_margin"
+                    android:visibility="invisible" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:id="@+id/lessor_contract_fee"
+                    android:layout_marginBottom="@dimen/margin_bottom" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

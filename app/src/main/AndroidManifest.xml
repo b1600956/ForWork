@@ -14,9 +14,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".LessorWorkspaceDetailActivity"
+            android:label=""
+            android:parentActivityName=".LessorMainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.forwork.LessorMainActivity" />
+        </activity>
+        <activity
             android:name=".LessorMainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ViewContractActivity" />
         <activity android:name=".ViewWorkSpaceActivity" />
         <activity

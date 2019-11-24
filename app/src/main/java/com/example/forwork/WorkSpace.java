@@ -1,5 +1,8 @@
 package com.example.forwork;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 
 import com.google.firebase.database.DataSnapshot;
@@ -10,7 +13,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
-public class WorkSpace {
+public class WorkSpace implements Parcelable {
     private String name;
     private String address;
     private String description;
@@ -59,6 +62,21 @@ public class WorkSpace {
         setStatus("Available");
         setLocation(location);
         setImageList(imageList);
+    }
+
+    private WorkSpace(Parcel in) {
+        setName(in.readString());
+        setAddress(in.readString());
+        setDescription(in.readString());
+        setCapacity(in.readInt());
+        setOpening_hour(in.readString());
+        setAmenities((ArrayList<String>) in.readSerializable());
+        setLessor(in.readString());
+        setContractAddress(in.readString());
+        setStatus(in.readString());
+        setImage(in.readInt());
+        setImageList((ArrayList<String>) in.readSerializable());
+        setLocation(in.readString());
     }
 
     public String getLocation() {
@@ -160,4 +178,37 @@ public class WorkSpace {
     public void addImage(String imageUrl) {
         this.imageList.add(imageUrl);
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(getName());
+        dest.writeString(getAddress());
+        dest.writeString(getDescription());
+        dest.writeInt(getCapacity());
+        dest.writeString(getOpening_hour());
+        dest.writeSerializable(getAmenities());
+        dest.writeString(getLessor());
+        dest.writeString(getContractAddress());
+        dest.writeString(getStatus());
+        dest.writeInt(getImage());
+        dest.writeSerializable(getImageList());
+        dest.writeString(getLocation());
+    }
+
+    public static final Creator<WorkSpace> CREATOR = new Creator<WorkSpace>() {
+        @Override
+        public WorkSpace createFromParcel(Parcel in) {
+            return new WorkSpace(in);
+        }
+
+        @Override
+        public WorkSpace[] newArray(int size) {
+            return new WorkSpace[size];
+        }
+    };
 }
