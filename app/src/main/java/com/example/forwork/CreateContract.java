@@ -54,8 +54,8 @@ public class CreateContract extends AsyncTask<Contract, Void, String> {
         Log.d("TAG", contracts[0].getOwnerKey() + "lk");
         ECKeyPair ecKeyPair = ECKeyPair.create(privkey);
         credentials = Credentials.create(ecKeyPair);
-        TransactionManager txManager = new FastRawTransactionManager(web3, credentials, new NoOpProcessor(web3));
-        RemoteCall<LeaseContract> request = LeaseContract.deploy(web3, txManager, DefaultGasProvider.GAS_PRICE,
+        //TransactionManager txManager = new FastRawTransactionManager(web3, credentials, new NoOpProcessor(web3));
+        RemoteCall<LeaseContract> request = LeaseContract.deploy(web3, credentials, DefaultGasProvider.GAS_PRICE,
                 DefaultGasProvider.GAS_LIMIT, contracts[0].getMin_duration(), contracts[0].getFee(), contracts[0].getRateOfCharge(), contracts[0].getCoworkspaceId());
         /**
          LeaseContract contract = LeaseContract.load("0xA4Ce2B0815f8780A3fA44F36b53b339219668bE1", web3, txManager, DefaultGasProvider.GAS_PRICE,
@@ -66,7 +66,7 @@ public class CreateContract extends AsyncTask<Contract, Void, String> {
             Log.d("TAG", contractAddress + " nonob");
             if (contractAddress != null) {
                 Log.d("TAG", contracts[0].getCoworkspaceId() + " nonoa");
-                workspaceDB.child(contracts[0].getCoworkspaceId()).child("contractAddress").setValue(contractAddress);
+                workspaceDB.child(contracts[0].getCoworkspaceId() + "/contractAddress").setValue(contractAddress);
                 userDB.child("coworkspace").setValue(contracts[0].getCoworkspaceId());
             }
             Log.d("TAG", contractAddress + " nono");
