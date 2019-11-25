@@ -130,6 +130,7 @@
     <string name="choose_user_type">You are</string>
     <string name="user_type_tag">UserType</string>
     <string name="location_states">Location (States)*</string>
+    <string name="enter_private_key">Enter your private key</string>
     <!--
     <string-array name="chargeRateList">
         <item>per hour</item>

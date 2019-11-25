@@ -132,10 +132,6 @@ public class LessorMainActivity extends AppCompatActivity {
                                 intent = new Intent(context, AddWorkspaceActivity.class);
                                 break;
 
-                            case R.id.nav_setting:
-                                intent = new Intent(context, LessorContractActivity.class);
-                                break;
-
                             case R.id.nav_feedback:
                                 intent = new Intent(context, FeedbackActivity.class);
                                 break;
@@ -147,7 +143,6 @@ public class LessorMainActivity extends AppCompatActivity {
                                 break;
                         }
                         startActivity(intent);
-                        finish();
                         mDrawerLayout.closeDrawers();
                         return true;
                     }

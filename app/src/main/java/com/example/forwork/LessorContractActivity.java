@@ -1,6 +1,7 @@
 package com.example.forwork;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -39,7 +40,6 @@ public class LessorContractActivity extends AppCompatActivity {
     private String rateOfCharge;
     private ProgressBar progressBar;
     private Button btn;
-    private String privateKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,54 +104,28 @@ public class LessorContractActivity extends AppCompatActivity {
                     InputMethodManager.HIDE_NOT_ALWAYS);
         }
         if (validateDuration() && validateFee()) {
-            getPrivateKey();
+            DialogFragment enterPrivateKeyFragment = new EnterPrivateKeyFragment();
+            enterPrivateKeyFragment.show(getSupportFragmentManager(), getString(R.string.enter_private_key));
         }
     }
 
-    private void getPrivateKey() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Title");
-
-// Set up the input
-        final EditText input = new EditText(this);
-// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-        input.setInputType(InputType.TYPE_CLASS_TEXT);
-        builder.setView(input);
-        builder.setTitle("Enter your private key");
-// Set up the buttons
-        builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                privateKey = input.getText().toString();
-                if (privateKey != null && !privateKey.isEmpty())
-                    createAnotherContract();
+    public void getPrivateKey(String privateKey) {
+        if (privateKey != null && !privateKey.isEmpty()) {
+            ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = null;
+            if (connMgr != null) {
+                networkInfo = connMgr.getActiveNetworkInfo();
             }
-        }).setNegativeButton(R.string.amenities_fragment_cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-
-            }
-        });
-        builder.show();
-    }
-
-    private void createAnotherContract() {
-        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = null;
-        if (connMgr != null) {
-            networkInfo = connMgr.getActiveNetworkInfo();
-        }
-        if (networkInfo != null && networkInfo.isConnected()) {
-            Log.d("TAG", privateKey);
-            if (privateKey != null) {
+            if (networkInfo != null && networkInfo.isConnected()) {
+                Log.d("TAG", privateKey);
                 new CreateContract(progressBar, Snackbar.make(findViewById(R.id.lessor_contract_layout), "", Snackbar.LENGTH_LONG), this)
                         .execute(new Contract(rateOfCharge, workspaceId, BigInteger.valueOf(minDuration), BigInteger.valueOf(contractFee), privateKey));
                 Log.d("TAG", "what");
                 progressBar.setVisibility(View.VISIBLE);
                 btn.setVisibility(View.GONE);
+            } else {
+                Snackbar.make(findViewById(R.id.lessor_contract_layout), "Failed to connect Internet! Please check your Internet connection", Snackbar.LENGTH_LONG);
             }
-        } else {
-            Snackbar.make(findViewById(R.id.lessor_contract_layout), "Failed to connect Internet! Please check your Internet connection", Snackbar.LENGTH_LONG);
         }
     }
 

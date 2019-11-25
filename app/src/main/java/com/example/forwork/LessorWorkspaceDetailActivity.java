@@ -66,13 +66,13 @@ public class LessorWorkspaceDetailActivity extends AppCompatActivity {
             workspace_address.setText(workspace.getAddress());
             workspace_capacity.setText(workspace.getCapacity() + " people");
             workspace_openingHour.setText(workspace.getOpening_hour());
+            workspace_contract_address.setText(workspace.getContractAddress());
             Glide.with(this).load(workspace.getImageList().get(0)).into(workspace_img);
             for (String amenity : workspace.getAmenities()) {
                 TextView textview = new TextView(this);
                 textview.setTextAppearance(R.style.TextAppearance_AppCompat_Medium);
                 textview.setText(amenity);
                 workspace_amenities.addView(textview);
-                workspace_contract_address.setText(workspace.getContractAddress());
             }
             ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = null;

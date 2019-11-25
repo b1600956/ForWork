@@ -179,8 +179,8 @@ public class AddWorkspaceActivity extends AppCompatActivity {
             } else if (imgList.isEmpty()) {
                 Snackbar.make(findViewById(R.id.addWorkspace_layout), getString(R.string.upload_img_alert), Snackbar.LENGTH_LONG).show();
             } else {
-                WorkSpace workspace = new WorkSpace(nameStr, descStr, addressStr, capacity, openingHourStr, amenitiesList, user.getUid(), locationStr);
                 String workSpaceId = workspaceDB.push().getKey();
+                WorkSpace workspace = new WorkSpace(workSpaceId, nameStr, descStr, addressStr, capacity, openingHourStr, amenitiesList, user.getUid(), locationStr);
                 workspaceDB.child(workSpaceId).setValue(workspace);
                 ArrayList<String> imgUrl = new ArrayList<>();
                 Log.d("TAG", imgList.size() + "JJ");

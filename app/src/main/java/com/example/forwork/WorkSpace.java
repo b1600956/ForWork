@@ -23,20 +23,15 @@ public class WorkSpace implements Parcelable {
     private String lessor;
     private String contractAddress;
     private String status;
-    private int image;
     private ArrayList<String> imageList;
     private String location;
+    private String id;
 
     public WorkSpace() {
     }
 
-    public WorkSpace(String name, String address, int image) {
-        setName(name);
-        setAddress(address);
-        setImage(image);
-    }
-
-    public WorkSpace(String name, String description, String address, int capacity, String opening_hour, ArrayList<String> amenities, String lessor, String location) {
+    public WorkSpace(String id, String name, String description, String address, int capacity, String opening_hour, ArrayList<String> amenities, String lessor, String location) {
+        setId(id);
         setName(name);
         setAddress(address);
         setDescription(description);
@@ -50,21 +45,8 @@ public class WorkSpace implements Parcelable {
         setImageList(new ArrayList<>());
     }
 
-    public WorkSpace(String name, String description, String address, int capacity, String opening_hour, ArrayList<String> amenities, String lessor, String location, ArrayList<String> imageList) {
-        setName(name);
-        setAddress(address);
-        setDescription(description);
-        setCapacity(capacity);
-        setOpening_hour(opening_hour);
-        setAmenities(amenities);
-        setLessor(lessor);
-        setContractAddress("");
-        setStatus("Available");
-        setLocation(location);
-        setImageList(imageList);
-    }
-
     private WorkSpace(Parcel in) {
+        setId(in.readString());
         setName(in.readString());
         setAddress(in.readString());
         setDescription(in.readString());
@@ -74,9 +56,16 @@ public class WorkSpace implements Parcelable {
         setLessor(in.readString());
         setContractAddress(in.readString());
         setStatus(in.readString());
-        setImage(in.readInt());
         setImageList((ArrayList<String>) in.readSerializable());
         setLocation(in.readString());
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getLocation() {
@@ -167,14 +156,6 @@ public class WorkSpace implements Parcelable {
         this.address = address;
     }
 
-    public int getImage() {
-        return image;
-    }
-
-    public void setImage(int image) {
-        this.image = image;
-    }
-
     public void addImage(String imageUrl) {
         this.imageList.add(imageUrl);
     }
@@ -186,6 +167,7 @@ public class WorkSpace implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(getId());
         dest.writeString(getName());
         dest.writeString(getAddress());
         dest.writeString(getDescription());
@@ -195,7 +177,6 @@ public class WorkSpace implements Parcelable {
         dest.writeString(getLessor());
         dest.writeString(getContractAddress());
         dest.writeString(getStatus());
-        dest.writeInt(getImage());
         dest.writeSerializable(getImageList());
         dest.writeString(getLocation());
     }
