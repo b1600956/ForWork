@@ -84,7 +84,7 @@ public class SignContract extends AsyncTask<String, Void, Boolean> {
         try {
             progBar.get().setVisibility(View.GONE);
             if (b) {
-                snackbar.get().setText("Successfully signed the contract");
+                snackbar.get().setText("Successfully signed the contract").show();
                 Log.d("TAG", "gg");
             } else {
                 snackbar.get().setText("Failed to create contract. Please Try Again!").show();
