@@ -54,7 +54,7 @@ public class ViewContract extends AsyncTask<String, Void, Contract> {
             LeaseContract contract = LeaseContract.load(strings[0], web3, txManager, DefaultGasProvider.GAS_PRICE,
                     DefaultGasProvider.GAS_LIMIT);
             Contract contractObj;
-            //Log.d("TAG","kk"+contract.getDeployedAddress("3"));
+            Log.d("TAG", "kk" + contract.getDuration().send());
             //BigInteger abc = contract.getDuration().send();
             //Log.d("TAG","kk"+abc);
             BigInteger minDuration = contract.getDuration().send();

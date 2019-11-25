@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/viewContractLayout"
     tools:context=".ViewContractActivity">
 
     <RelativeLayout
@@ -17,7 +18,7 @@
         android:elevation="@dimen/elevation">
 
         <TextView
-            android:id="@+id/view_workspace_name"
+            android:id="@+id/view_workspaceName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Vladimir Nabokov"
@@ -28,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/view_period"
-            android:layout_below="@+id/view_workspace_name"
+            android:layout_below="@+id/view_workspaceName"
             android:text="@string/workspace_daily"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textColor="@color/light_background_colour" />
@@ -40,9 +41,26 @@
             android:layout_alignParentRight="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Button"
             android:text="@string/sign_contract_btn"
+            android:id="@+id/signContract_btn"
             android:onClick="signContract"
             style="@style/Widget.MaterialComponents.Button" />
+
+        <ProgressBar
+            android:id="@+id/signContract_progressBar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="40dp"
+            android:visibility="gone" />
     </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/contract_progressBar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="@dimen/activity_margin"
+        android:layout_gravity="center" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -53,32 +71,52 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Contract Address"
+            android:id="@+id/view_contract_address_label"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:layout_marginBottom="@dimen/activity_top_margin"
+            android:visibility="invisible" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/view_contract_address"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:layout_marginBottom="@dimen/margin_bottom"
+            android:text="sdfsdfhsdfjkhsdfjkhsdfjkh"
+            android:visibility="invisible" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/view_min_duration"
+            android:id="@+id/view_minDuration_label"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:layout_marginBottom="@dimen/activity_top_margin" />
+            android:layout_marginBottom="@dimen/activity_top_margin"
+            android:visibility="invisible" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/view_workspace_description"
+            android:id="@+id/view_contract_minDuration"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:layout_marginBottom="@dimen/margin_bottom" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:id="@+id/view_fee_label"
+            android:text="Fee"
+            android:layout_marginBottom="@dimen/activity_top_margin"
+            android:visibility="invisible" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:layout_marginBottom="@dimen/margin_bottom"
-            android:text="1 day" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:text="Fee (ETH)"
-            android:layout_marginBottom="@dimen/activity_top_margin" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:layout_marginBottom="@dimen/margin_bottom"
-            android:id="@+id/view_opening_hour"
-            android:text="50" />
+            android:id="@+id/view_contract_fee" />
 
     </LinearLayout>
 

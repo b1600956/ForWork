@@ -1,6 +1,7 @@
 package com.example.forwork;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +19,18 @@ import java.util.List;
 public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapter.LocationViewHolder> {
     private final List<String> mLocationList;
     private final LayoutInflater mInflater;
+    private Context mContext;
+
+    public LocationListAdapter(Context context, List<String> locationList) {
+        mInflater = LayoutInflater.from(context);
+        this.mLocationList = locationList;
+        this.mContext = context;
+    }
 
     class LocationViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView locationItemView;
         final LocationListAdapter mAdapter;
+        public static final String MESSAGE8 = "com.example.android.forwork.MESSAGE8";
 
         private LocationViewHolder(View itemView, LocationListAdapter adapter) {
             super(itemView);
@@ -33,12 +42,10 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
         @Override
         public void onClick(View v) {
             Log.i("Testing", locationItemView.getText().toString());
+            Intent intent = new Intent(mContext, ResultActivity.class);
+            intent.putExtra(MESSAGE8, locationItemView.getText().toString());
+            mContext.startActivity(intent);
         }
-    }
-
-    public LocationListAdapter(Context context, List<String> locationList) {
-        mInflater = LayoutInflater.from(context);
-        this.mLocationList = locationList;
     }
 
     @NonNull
