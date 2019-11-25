@@ -56,6 +56,7 @@
             android:padding="@dimen/activity_margin">
 
             <ImageView
+                android:id="@+id/view_workspace_img"
                 android:layout_width="match_parent"
                 android:layout_height="272dp"
                 android:src="@drawable/workspace_img5" />
@@ -124,13 +125,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:text="Images"
+                android:layout_marginBottom="@dimen/activity_top_margin" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/view_img_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_bottom" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:text="@string/amenities_title"
                 android:layout_marginBottom="@dimen/activity_top_margin" />
 
-            <ListView
+            <LinearLayout
                 android:id="@+id/view_amenities_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="@dimen/activity_margin"></LinearLayout>
 
         </LinearLayout>
     </ScrollView>

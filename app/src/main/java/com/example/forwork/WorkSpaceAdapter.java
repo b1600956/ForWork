@@ -84,7 +84,7 @@ public class WorkSpaceAdapter extends RecyclerView.Adapter<WorkSpaceAdapter.View
         private TextView nameText;
         private TextView addressText;
         private ImageButton workSpaceImage;
-
+        public static final String MESSAGE4 = "com.example.android.forwork.MESSAGE4";
         /**
          * Constructor for the ViewHolder, used in onCreateViewHolder().
          *
@@ -92,7 +92,6 @@ public class WorkSpaceAdapter extends RecyclerView.Adapter<WorkSpaceAdapter.View
          */
         ViewHolder(View itemView) {
             super(itemView);
-
             // Initialize the views.
             nameText = itemView.findViewById(R.id.working_space_name);
             addressText = itemView.findViewById(R.id.working_space_address);
@@ -102,14 +101,14 @@ public class WorkSpaceAdapter extends RecyclerView.Adapter<WorkSpaceAdapter.View
             workSpaceImage.setOnClickListener(this);
         }
 
-        void bindTo(WorkSpace currentSport) {
+        void bindTo(WorkSpace currentWorkspace) {
             // Populate the textviews with data.
-            nameText.setText(currentSport.getName());
-            addressText.setText(currentSport.getAddress());
+            nameText.setText(currentWorkspace.getName());
+            addressText.setText(currentWorkspace.getAddress());
 
             // Load the images into the ImageView using the Glide library.
             Glide.with(mContext).load(
-                    currentSport.getImage()).into(workSpaceImage);
+                    currentWorkspace.getImageList().get(0)).into(workSpaceImage);
         }
 
         /**
@@ -119,10 +118,9 @@ public class WorkSpaceAdapter extends RecyclerView.Adapter<WorkSpaceAdapter.View
          */
         @Override
         public void onClick(View view) {
-            WorkSpace currentSport = workSpaceData.get(getAdapterPosition());
-            Log.i("Testing", currentSport.getName());
-            Intent intent = new Intent(mContext, ViewWorkSpaceActivity.class);
-            mContext.startActivity(intent);
+            WorkSpace currentWorkspace = workSpaceData.get(getAdapterPosition());
+            Log.i("Testing", currentWorkspace.getName());
+            mContext.startActivity(new Intent(mContext, ViewWorkSpaceActivity.class).putExtra(MESSAGE4, currentWorkspace));
         }
     }
 }

@@ -17,6 +17,11 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -58,7 +63,9 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<WorkSpace> workSpaceData;
     private WorkSpaceAdapter workSpaceAdapter;
     private FirebaseAuth mAuth;
+    private DatabaseReference workSpaceDatabase;
     private GoogleSignInClient mGoogleSignInClient;
+    public static final String MESSAGE9 = "com.example.android.forwork.MESSAGE9";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         navigationView.getMenu().findItem(R.id.nav_my_contract).setVisible(true);
         navigationView.getMenu().findItem(R.id.nav_create_contract).setVisible(false);
         mAuth = FirebaseAuth.getInstance();
+        workSpaceDatabase = FirebaseDatabase.getInstance().getReference("Co-Workspace");
         // Adding menu icon to Toolbar
         ActionBar supportActionBar = getSupportActionBar();
         if (supportActionBar != null) {
@@ -103,10 +111,6 @@ public class MainActivity extends AppCompatActivity {
                                 intent = new Intent(context, MyContractsActivity.class);
                                 break;
 
-                            case R.id.nav_setting:
-                                intent = new Intent(context, LessorContractActivity.class);
-                                break;
-
                             case R.id.nav_feedback:
                                 intent = new Intent(context, FeedbackActivity.class);
                                 break;
@@ -123,14 +127,13 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
         locationList = Arrays.asList(getResources().getStringArray(R.array.location_list));
-
         mRecyclerView = findViewById(R.id.recyclerView);
         workspace_list_daily = findViewById(R.id.workspace_list_daily);
         workspace_list_monthly = findViewById(R.id.workspace_list_monthly);
         workspace_list_weekly = findViewById(R.id.workspace_list_weekly);
         mAdapter = new LocationListAdapter(this, locationList);
         workSpaceData = new ArrayList<>();
-        workSpaceAdapter = new WorkSpaceAdapter(this, workSpaceData);
+        workSpaceAdapter = new WorkSpaceAdapter(context, workSpaceData);
         mRecyclerView.setAdapter(mAdapter);
         workspace_list_daily.setAdapter(workSpaceAdapter);
         workspace_list_weekly.setAdapter(workSpaceAdapter);
@@ -139,7 +142,24 @@ public class MainActivity extends AppCompatActivity {
         workspace_list_daily.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         workspace_list_weekly.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         workspace_list_monthly.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        initializeWorkspaceData();
+        workSpaceDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    WorkSpace workspace = postSnapshot.getValue(WorkSpace.class);
+                    if (workspace != null) {
+                        if (workspace.getStatus().equalsIgnoreCase("Available"))
+                            workSpaceData.add(workspace);
+                    }
+                }
+                workSpaceAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+        //initializeWorkspaceData();
     }
 
     public void onStart() {
@@ -157,6 +177,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
     private void initializeWorkspaceData() {
         String[] workspaceList = getResources().getStringArray(R.array.workspace_names);
         String[] workspaceAddress = getResources().getStringArray(R.array.workspace_address);
@@ -168,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
         workspaceImg.recycle();
         workSpaceAdapter.notifyDataSetChanged();
     }
-
+     **/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -179,6 +200,21 @@ public class MainActivity extends AppCompatActivity {
         SearchView menu_searchView = (SearchView) searchItem.getActionView();
         // Assumes current activity is the searchable activity
         menu_searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
+            public boolean onQueryTextChange(String newText) {
+                // this is your adapter that will be filtered
+                return true;
+            }
+
+            public boolean onQueryTextSubmit(String query) {
+                //Here u can get the value "query" which is entered in the search box.
+                Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
+                intent.putExtra(MESSAGE9, query);
+                startActivity(intent);
+                return true;
+            }
+        };
+        menu_searchView.setOnQueryTextListener(queryTextListener);
         return true;
     }
 
@@ -195,9 +231,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         } else if(id == android.R.id.home){
             mDrawerLayout.openDrawer(GravityCompat.START);
-        } else if (id == R.id.action_filter) {
-            DialogFragment filterFragment = new FilterFragment();
-            filterFragment.show(getSupportFragmentManager(), getResources().getString(R.string.filter_title));
         }
         return super.onOptionsItemSelected(item);
     }
