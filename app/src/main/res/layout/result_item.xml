@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/activity_top_margin"
+    android:id="@+id/result_layout"
+    android:background="@color/white"
+    android:elevation="@dimen/elevation">
+
+    <ImageButton
+        android:id="@+id/result_img"
+        android:contentDescription="@string/workspace_img_desc"
+        android:layout_width="130dp"
+        android:layout_height="130dp" />
+
+    <TextView
+        android:id="@+id/result_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/result_img"
+        android:layout_marginLeft="@dimen/activity_top_margin"
+        android:layout_marginTop="@dimen/activity_margin"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold"
+        android:text="LZ Space" />
+
+    <TextView
+        android:id="@+id/result_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:layout_toRightOf="@id/result_img"
+        android:layout_below="@+id/result_name"
+        android:layout_marginLeft="@dimen/activity_top_margin"
+        android:layout_marginTop="@dimen/activity_top_margin"
+        android:text="2 Jalan Tun Sambanthan, Sentral, Level 23, Kuala Lumpur, Malaysia" />
+
+    <TextView
+        android:id="@+id/result_period"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:layout_below="@+id/result_address"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/activity_top_margin"
+        android:layout_marginRight="@dimen/activity_top_margin"
+        android:layout_alignBottom="@+id/result_img"
+        android:gravity="bottom"
+        android:textColor="@color/colorAccent"
+        android:text="@string/workspace_daily" />
+
+</RelativeLayout>
