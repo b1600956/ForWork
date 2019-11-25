@@ -4,6 +4,59 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/light_background_colour"
+    android:padding="@dimen/activity_vertical_margin"
     tools:context=".MyContractsActivity">
+
+    <TextView
+        android:id="@+id/noWorkSpace"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:text="Currently you do not have any leased co-working space"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/my_WorkSpace"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:elevation="@dimen/elevation"
+        android:layout_marginTop="@dimen/activity_top_margin"
+        android:onClick="viewWorkspace">
+
+        <TextView
+            android:id="@+id/myWorkSpace_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <ImageView
+            android:id="@+id/myWorkSpace_img"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_below="@+id/myWorkSpace_name" />
+
+        <TextView
+            android:id="@+id/myWorkSpace_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:layout_below="@+id/myWorkSpace_img" />
+
+        <TextView
+            android:id="@+id/myWorkSpace_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:layout_below="@+id/myWorkSpace_address"
+            android:gravity="right"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/activity_margin"
+            android:layout_marginRight="@dimen/activity_margin"
+            android:textColor="@color/colorAccent" />
+
+    </RelativeLayout>
 
 </LinearLayout>
