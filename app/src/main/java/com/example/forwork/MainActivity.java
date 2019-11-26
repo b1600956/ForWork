@@ -60,8 +60,12 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView workspace_list_daily;
     private RecyclerView workspace_list_weekly;
     private RecyclerView workspace_list_monthly;
-    private ArrayList<WorkSpace> workSpaceData;
-    private WorkSpaceAdapter workSpaceAdapter;
+    private ArrayList<WorkSpace> workSpaceDaily;
+    private ArrayList<WorkSpace> workSpaceWeekly;
+    private ArrayList<WorkSpace> workSpaceMonthly;
+    private WorkSpaceAdapter workSpaceDailyAdapter;
+    private WorkSpaceAdapter workSpaceWeeklyAdapter;
+    private WorkSpaceAdapter workSpaceMonthlyAdapter;
     private FirebaseAuth mAuth;
     private DatabaseReference workSpaceDatabase;
     private GoogleSignInClient mGoogleSignInClient;
@@ -132,12 +136,16 @@ public class MainActivity extends AppCompatActivity {
         workspace_list_monthly = findViewById(R.id.workspace_list_monthly);
         workspace_list_weekly = findViewById(R.id.workspace_list_weekly);
         mAdapter = new LocationListAdapter(this, locationList);
-        workSpaceData = new ArrayList<>();
-        workSpaceAdapter = new WorkSpaceAdapter(context, workSpaceData);
+        workSpaceDaily = new ArrayList<>();
+        workSpaceWeekly = new ArrayList<>();
+        workSpaceMonthly = new ArrayList<>();
+        workSpaceDailyAdapter = new WorkSpaceAdapter(context, workSpaceDaily);
+        workSpaceWeeklyAdapter = new WorkSpaceAdapter(context, workSpaceWeekly);
+        workSpaceMonthlyAdapter = new WorkSpaceAdapter(context, workSpaceMonthly);
         mRecyclerView.setAdapter(mAdapter);
-        workspace_list_daily.setAdapter(workSpaceAdapter);
-        workspace_list_weekly.setAdapter(workSpaceAdapter);
-        workspace_list_monthly.setAdapter(workSpaceAdapter);
+        workspace_list_daily.setAdapter(workSpaceDailyAdapter);
+        workspace_list_weekly.setAdapter(workSpaceWeeklyAdapter);
+        workspace_list_monthly.setAdapter(workSpaceMonthlyAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         workspace_list_daily.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         workspace_list_weekly.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -149,10 +157,17 @@ public class MainActivity extends AppCompatActivity {
                     WorkSpace workspace = postSnapshot.getValue(WorkSpace.class);
                     if (workspace != null) {
                         if (workspace.getStatus().equalsIgnoreCase("Available"))
-                            workSpaceData.add(workspace);
+                            if(workspace.getPeriod().equalsIgnoreCase(getString(R.string.workspace_daily)))
+                                workSpaceDaily.add(workspace);
+                            else if (workspace.getPeriod().equalsIgnoreCase(getString(R.string.workspace_weekly)))
+                                workSpaceWeekly.add(workspace);
+                            else
+                                workSpaceMonthly.add(workspace);
                     }
                 }
-                workSpaceAdapter.notifyDataSetChanged();
+                workSpaceDailyAdapter.notifyDataSetChanged();
+                workSpaceWeeklyAdapter.notifyDataSetChanged();
+                workSpaceMonthlyAdapter.notifyDataSetChanged();
             }
 
             @Override

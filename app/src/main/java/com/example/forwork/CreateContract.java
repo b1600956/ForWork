@@ -67,6 +67,7 @@ public class CreateContract extends AsyncTask<Contract, Void, String> {
             if (contractAddress != null) {
                 Log.d("TAG", contracts[0].getCoworkspaceId() + " nonoa");
                 workspaceDB.child(contracts[0].getCoworkspaceId() + "/contractAddress").setValue(contractAddress);
+                workspaceDB.child(contracts[0].getCoworkspaceId() + "/period").setValue(contracts[0].getRateOfCharge());
                 userDB.child("coworkspace").setValue(contracts[0].getCoworkspaceId());
             }
             Log.d("TAG", contractAddress + " nono");

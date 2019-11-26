@@ -26,6 +26,7 @@ public class WorkSpace implements Parcelable {
     private ArrayList<String> imageList;
     private String location;
     private String id;
+    private String period;
 
     public WorkSpace() {
     }
@@ -43,6 +44,7 @@ public class WorkSpace implements Parcelable {
         setStatus("Available");
         setLocation(location);
         setImageList(new ArrayList<>());
+        setPeriod("");
     }
 
     private WorkSpace(Parcel in) {
@@ -58,6 +60,15 @@ public class WorkSpace implements Parcelable {
         setStatus(in.readString());
         setImageList((ArrayList<String>) in.readSerializable());
         setLocation(in.readString());
+        setPeriod(in.readString());
+    }
+
+    public String getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(String period) {
+        this.period = period;
     }
 
     public String getId() {
@@ -179,6 +190,7 @@ public class WorkSpace implements Parcelable {
         dest.writeString(getStatus());
         dest.writeSerializable(getImageList());
         dest.writeString(getLocation());
+        dest.writeString(getPeriod());
     }
 
     public static final Creator<WorkSpace> CREATOR = new Creator<WorkSpace>() {

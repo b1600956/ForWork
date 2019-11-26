@@ -109,7 +109,7 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder
             // Populate the textviews with data.
             nameText.setText(currentWorkspace.getName());
             addressText.setText(currentWorkspace.getAddress());
-            periodText.setText(currentWorkspace.getStatus());
+            periodText.setText(currentWorkspace.getPeriod());
             // Load the images into the ImageView using the Glide library.
             Glide.with(mContext).load(
                     currentWorkspace.getImageList().get(0)).into(workSpaceImage);

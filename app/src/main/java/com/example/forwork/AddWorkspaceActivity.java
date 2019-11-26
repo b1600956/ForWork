@@ -227,7 +227,7 @@ public class AddWorkspaceActivity extends AppCompatActivity {
     }
 
     public void getSelectedAmenities(ArrayList<String> mSelectedItems) {
-        amenitiesBtn.setText(amenitiesBtn.getText().toString() + getString(R.string.display_selected_count)
+        amenitiesBtn.setText(getString(R.string.workspace_amenities) + getString(R.string.display_selected_count)
                 + mSelectedItems.size() + getString(R.string.display_selected_text));
         amenitiesList = mSelectedItems;
     }
@@ -249,6 +249,7 @@ public class AddWorkspaceActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SELECT_IMG && resultCode == RESULT_OK && data != null) {
+            imgList.clear();
             if (data.getClipData() != null) {
                 for (int i = 0; i < data.getClipData().getItemCount(); i++) {
                     imgList.add(data.getClipData().getItemAt(i).getUri());
@@ -257,7 +258,7 @@ public class AddWorkspaceActivity extends AppCompatActivity {
                 Uri file = data.getData();
                 imgList.add(file);
             }
-            uploadImgBtn.setText(uploadImgBtn.getText().toString() + getString(R.string.display_selected_count)
+            uploadImgBtn.setText(getString(R.string.upload_images) + getString(R.string.display_selected_count)
                     + imgList.size() + getString(R.string.display_selected_text));
         }
     }

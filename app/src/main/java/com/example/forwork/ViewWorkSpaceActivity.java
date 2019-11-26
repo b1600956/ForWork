@@ -24,6 +24,7 @@ public class ViewWorkSpaceActivity extends AppCompatActivity {
     private TextView workspace_address;
     private TextView workspace_capacity;
     private TextView workspace_openingHour;
+    private TextView workspace_period;
     private ImageView workspace_img;
     private LinearLayout workspace_amenities;
     private RecyclerView mRecyclerView;
@@ -50,6 +51,7 @@ public class ViewWorkSpaceActivity extends AppCompatActivity {
         workspace_openingHour = findViewById(R.id.view_opening_hour);
         workspace_img = findViewById(R.id.view_workspace_img);
         workspace_amenities = findViewById(R.id.view_amenities_list);
+        workspace_period = findViewById(R.id.view_period);
         mRecyclerView = findViewById(R.id.view_img_list);
         if (savedInstanceState != null) {
             workspace = savedInstanceState.getParcelable("reply_visible");
@@ -66,6 +68,7 @@ public class ViewWorkSpaceActivity extends AppCompatActivity {
             workspace_address.setText(workspace.getAddress());
             workspace_capacity.setText(workspace.getCapacity() + " people");
             workspace_openingHour.setText(workspace.getOpening_hour());
+            workspace_period.setText(workspace.getPeriod());
             Glide.with(this).load(workspace.getImageList().get(0)).into(workspace_img);
             for (String amenity : workspace.getAmenities()) {
                 TextView textview = new TextView(this);
