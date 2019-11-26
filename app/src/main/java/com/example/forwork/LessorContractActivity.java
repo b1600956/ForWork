@@ -120,7 +120,7 @@ public class LessorContractActivity extends AppCompatActivity {
                 Log.d("TAG", privateKey);
                 new CreateContract(progressBar, Snackbar.make(findViewById(R.id.lessor_contract_layout), "", Snackbar.LENGTH_LONG), this)
                         .execute(new Contract(rateOfCharge, workspaceId, BigInteger.valueOf(minDuration), BigInteger.valueOf(contractFee), privateKey));
-                Log.d("TAG", "what");
+                Log.d("TAG", "Ok");
                 progressBar.setVisibility(View.VISIBLE);
                 btn.setVisibility(View.GONE);
             } else {

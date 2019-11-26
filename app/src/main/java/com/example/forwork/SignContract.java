@@ -51,28 +51,28 @@ public class SignContract extends AsyncTask<String, Void, Boolean> {
     @Override
     protected Boolean doInBackground(String... strings) {
         BigInteger privkey = new BigInteger(strings[0], 16);
-        Log.d("TAG", strings[0] + "lk");
+        Log.d("TAG", strings[0] + "private key");
         ECKeyPair ecKeyPair = ECKeyPair.create(privkey);
         credentials = Credentials.create(ecKeyPair);
         TransactionManager txManager = new FastRawTransactionManager(web3, credentials, new NoOpProcessor(web3));
         LeaseContract contract = LeaseContract.load(strings[1], web3, txManager, DefaultGasProvider.GAS_PRICE,
                 DefaultGasProvider.GAS_LIMIT);
-        Log.d("TAG", strings[1] + "kk");
+        Log.d("TAG", strings[1] + "contract address");
         try {
-            Log.d("TAG", " nonob" + contract.getContractAddress() + strings[2].split(" ")[0]);
+            Log.d("TAG", " test" + contract.getContractAddress() + strings[2].split(" ")[0]);
             if (contract != null) {
                 TransactionReceipt receipt = contract.signContract(Integer.parseInt(strings[2].split(" ")[0])).send();
-                Log.d("TAG", strings[2] + " nonoa");
+                Log.d("TAG", strings[2] + " fee");
                 if (receipt != null) {
                     userDB.child("coworkspace").setValue(strings[3]);
                     workspaceDB.child(strings[3] + "/status").setValue("Leased");
-                    Log.d("TAG", strings[3] + " bobo");
+                    Log.d("TAG", strings[3] + " coworkspace id");
                     return true;
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Log.d("TAG", "Let's get it");
+            Log.d("TAG", "Error");
         }
         return false;
     }
@@ -80,20 +80,22 @@ public class SignContract extends AsyncTask<String, Void, Boolean> {
     @Override
     protected void onPostExecute(Boolean b) {
         super.onPostExecute(b);
-        Log.d("TAG", "Lala");
+        Log.d("TAG", "Ok2");
         try {
             progBar.get().setVisibility(View.GONE);
             if (b) {
                 snackbar.get().setText("Successfully signed the contract").show();
-                Log.d("TAG", "gg");
+                Log.d("TAG", "success");
             } else {
                 snackbar.get().setText("Failed to create contract. Please Try Again!").show();
                 signBtn.get().setVisibility(View.VISIBLE);
-                Log.d("TAG", "babaLala");
+                Log.d("TAG", "Failed");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Log.d("TAG", "tatababaLala");
+            Log.d("TAG", "Error2");
         }
     }
+
+
 }

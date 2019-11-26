@@ -183,7 +183,7 @@ public class AddWorkspaceActivity extends AppCompatActivity {
                 WorkSpace workspace = new WorkSpace(workSpaceId, nameStr, descStr, addressStr, capacity, openingHourStr, amenitiesList, user.getUid(), locationStr);
                 workspaceDB.child(workSpaceId).setValue(workspace);
                 ArrayList<String> imgUrl = new ArrayList<>();
-                Log.d("TAG", imgList.size() + "JJ");
+                Log.d("TAG", imgList.size() + "size");
                 count = 0;
                 for (Uri img : imgList) {
                     StorageReference imgStorage = storageReference.child(workSpaceId + "/" + UUID.randomUUID().toString());
@@ -201,9 +201,9 @@ public class AddWorkspaceActivity extends AppCompatActivity {
                                         @Override
                                         public void onSuccess(Uri uri) {
                                             imgUrl.add(String.valueOf(uri));
-                                            Log.d("TAG", String.valueOf(uri) + "LK");
-                                            Log.d("TAG", imgUrl.size() + "cc");
-                                            Log.d("TAG", imgList.indexOf(img) + "jj");
+                                            Log.d("TAG", String.valueOf(uri) + "uri");
+                                            Log.d("TAG", imgUrl.size() + "imgListSize");
+                                            Log.d("TAG", imgList.indexOf(img) + "imgIndex");
                                             if (count == (imgList.size() - 1)) {
                                                 workspaceDB.child(workSpaceId + "/imageList").setValue(imgUrl);
                                             }

@@ -72,7 +72,6 @@ public class ViewContractActivity extends AppCompatActivity {
         // handle arrow click here
         if (item.getItemId() == android.R.id.home) {
             startActivity(new Intent(this, ViewWorkSpaceActivity.class).putExtra(WorkSpaceAdapter.ViewHolder.MESSAGE4, workspace));
-            Log.d("TAG","wwwww");
             finish();
         }
         return super.onOptionsItemSelected(item);
@@ -94,7 +93,6 @@ public class ViewContractActivity extends AppCompatActivity {
                 Log.d("TAG", privateKey);
                 new SignContract(signContract_progressBar, Snackbar.make(findViewById(R.id.viewContractLayout), "", Snackbar.LENGTH_LONG), signContract_btn)
                         .execute(privateKey, workspace.getContractAddress(), contract_fee.getText().toString(), workspace.getId());
-                Log.d("TAG", "what");
                 signContract_progressBar.setVisibility(View.VISIBLE);
                 signContract_btn.setVisibility(View.GONE);
             } else {
@@ -102,4 +100,5 @@ public class ViewContractActivity extends AppCompatActivity {
             }
         }
     }
+
 }

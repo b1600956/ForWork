@@ -54,7 +54,7 @@ public class ViewContract extends AsyncTask<String, Void, Contract> {
             LeaseContract contract = LeaseContract.load(strings[0], web3, txManager, DefaultGasProvider.GAS_PRICE,
                     DefaultGasProvider.GAS_LIMIT);
             Contract contractObj;
-            Log.d("TAG", "kk" + contract.getDuration().send());
+            Log.d("TAG", "duration" + contract.getDuration().send());
             //BigInteger abc = contract.getDuration().send();
             //Log.d("TAG","kk"+abc);
             BigInteger minDuration = contract.getDuration().send();
@@ -64,7 +64,7 @@ public class ViewContract extends AsyncTask<String, Void, Contract> {
             return contractObj;
         } catch (Exception e) {
             e.printStackTrace();
-            Log.d("TAG", "Let's get it");
+            Log.d("TAG", "Error");
         }
         return null;
     }
@@ -72,7 +72,7 @@ public class ViewContract extends AsyncTask<String, Void, Contract> {
     @Override
     protected void onPostExecute(Contract c) {
         super.onPostExecute(c);
-        Log.d("TAG", "Lala");
+        Log.d("TAG", "Ok");
         try {
             if (c != null) {
                 String period;
@@ -90,13 +90,13 @@ public class ViewContract extends AsyncTask<String, Void, Contract> {
                 this.contractFeeLabel.get().setVisibility(View.VISIBLE);
                 contractAddressView.get().setVisibility(View.VISIBLE);
                 progressBar.get().setVisibility(View.GONE);
-                Log.d("TAG", "gg");
+                Log.d("TAG", "Ok");
             } else {
-                Log.d("TAG", "babaLala");
+                Log.d("TAG", "Failed");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Log.d("TAG", "tatababaLala");
+            Log.d("TAG", "Error");
         }
     }
 }

@@ -128,7 +128,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             handleSignInResult(task);
         } else {
             displayError();
-            Log.d(TAG, "dun");
+            Log.d(TAG, "error");
         }
     }
 

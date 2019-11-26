@@ -51,7 +51,7 @@ public class CreateContract extends AsyncTask<Contract, Void, String> {
     @Override
     protected String doInBackground(Contract... contracts) {
         BigInteger privkey = new BigInteger(contracts[0].getOwnerKey(), 16);
-        Log.d("TAG", contracts[0].getOwnerKey() + "lk");
+        Log.d("TAG", contracts[0].getOwnerKey() + "private key");
         ECKeyPair ecKeyPair = ECKeyPair.create(privkey);
         credentials = Credentials.create(ecKeyPair);
         //TransactionManager txManager = new FastRawTransactionManager(web3, credentials, new NoOpProcessor(web3));
@@ -63,18 +63,18 @@ public class CreateContract extends AsyncTask<Contract, Void, String> {
         try {
             LeaseContract contract = request.send();
             String contractAddress = contract.getContractAddress();
-            Log.d("TAG", contractAddress + " nonob");
+            Log.d("TAG", contractAddress + " contract address");
             if (contractAddress != null) {
-                Log.d("TAG", contracts[0].getCoworkspaceId() + " nonoa");
+                Log.d("TAG", contracts[0].getCoworkspaceId() + " workspace id");
                 workspaceDB.child(contracts[0].getCoworkspaceId() + "/contractAddress").setValue(contractAddress);
                 workspaceDB.child(contracts[0].getCoworkspaceId() + "/period").setValue(contracts[0].getRateOfCharge());
                 userDB.child("coworkspace").setValue(contracts[0].getCoworkspaceId());
             }
-            Log.d("TAG", contractAddress + " nono");
+            Log.d("TAG", contractAddress + " contractAddress");
             return contractAddress;
         } catch (Exception e) {
             e.printStackTrace();
-            Log.d("TAG", "Let's get it");
+            Log.d("TAG", "Error");
         }
         return null;
     }
@@ -82,20 +82,20 @@ public class CreateContract extends AsyncTask<Contract, Void, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        Log.d("TAG", "Lala");
+        Log.d("TAG", "OK");
         try {
             if (s != null && !s.isEmpty()) {
                 progBar.get().setVisibility(View.GONE);
                 activity.startActivity(new Intent(activity, LessorMainActivity.class));
                 activity.finish();
-                Log.d("TAG", "gg");
+                Log.d("TAG", "OK2");
             } else {
                 snackbar.get().setText("Failed to create contract. Please Try Again!").show();
-                Log.d("TAG", "babaLala");
+                Log.d("TAG", "Failed");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Log.d("TAG", "tatababaLala");
+            Log.d("TAG", "Error2");
         }
     }
 }
