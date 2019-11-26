@@ -53,6 +53,9 @@ public class ViewContractActivity extends AppCompatActivity {
         signContract_btn = findViewById(R.id.signContract_btn);
         contract_address.setText(workspace.getContractAddress());
         this.workspaceName.setText(workspace.getName());
+        if (!(workspace.getStatus().equalsIgnoreCase("Available"))) {
+            signContract_btn.setVisibility(View.GONE);
+        }
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = null;
         if (connMgr != null) {

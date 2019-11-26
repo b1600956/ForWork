@@ -201,7 +201,6 @@ public class LessorMainActivity extends AppCompatActivity {
 
     public void addWorkSpace(View view) {
         startActivity(new Intent(this, AddWorkspaceActivity.class));
-        finish();
     }
 
     public void viewWorkspaceDetail(View view) {

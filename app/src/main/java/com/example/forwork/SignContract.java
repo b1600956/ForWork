@@ -61,7 +61,7 @@ public class SignContract extends AsyncTask<String, Void, Boolean> {
         try {
             Log.d("TAG", " test" + contract.getContractAddress() + strings[2].split(" ")[0]);
             if (contract != null) {
-                TransactionReceipt receipt = contract.signContract(Integer.parseInt(strings[2].split(" ")[0])).send();
+                TransactionReceipt receipt = contract.signContract(BigInteger.valueOf(Integer.parseInt(strings[2].split(" ")[0]))).send();
                 Log.d("TAG", strings[2] + " fee");
                 if (receipt != null) {
                     userDB.child("coworkspace").setValue(strings[3]);

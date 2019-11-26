@@ -16,8 +16,10 @@ import org.web3j.tx.FastRawTransactionManager;
 import org.web3j.tx.TransactionManager;
 import org.web3j.tx.gas.DefaultGasProvider;
 import org.web3j.tx.response.NoOpProcessor;
+import org.web3j.utils.Convert;
 
 import java.lang.ref.WeakReference;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.NoSuchAlgorithmException;
@@ -60,7 +62,7 @@ public class ViewContract extends AsyncTask<String, Void, Contract> {
             BigInteger minDuration = contract.getDuration().send();
             String rateOfCharge = contract.getRateOfCharge().send();
             BigInteger fee = contract.getPrice().send();
-            contractObj = new Contract(rateOfCharge, "", minDuration, fee, "");
+            contractObj = new Contract(rateOfCharge, "", minDuration, Convert.fromWei(fee.toString(), Convert.Unit.ETHER).toBigInteger(), "");
             return contractObj;
         } catch (Exception e) {
             e.printStackTrace();
@@ -84,7 +86,7 @@ public class ViewContract extends AsyncTask<String, Void, Contract> {
                     period = "Month(s)";
                 }
                 contractMinDurationView.get().setText(c.getMin_duration() + " " + period);
-                contractFeeView.get().setText(c.getFee() + " ETH " + c.getRateOfCharge());
+                contractFeeView.get().setText(c.getFee().toString() + " ETH " + c.getRateOfCharge());
                 this.contractAddressLabel.get().setVisibility(View.VISIBLE);
                 this.contractMinDurationLabel.get().setVisibility(View.VISIBLE);
                 this.contractFeeLabel.get().setVisibility(View.VISIBLE);
