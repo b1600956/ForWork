@@ -53,12 +53,6 @@ public class ViewWorkSpaceActivity extends AppCompatActivity {
         workspace_amenities = findViewById(R.id.view_amenities_list);
         workspace_period = findViewById(R.id.view_period);
         mRecyclerView = findViewById(R.id.view_img_list);
-        if (savedInstanceState != null) {
-            workspace = savedInstanceState.getParcelable("reply_visible");
-            Log.d("TAG", "ok");
-        } else {
-            Log.d("TAG", "haha");
-        }
         if (workspace != null) {
             adapter = new WorkspaceImageAdapter(this, workspace.getImageList());
             mRecyclerView.setAdapter(adapter);
@@ -77,7 +71,6 @@ public class ViewWorkSpaceActivity extends AppCompatActivity {
                 workspace_amenities.addView(textview);
             }
         }
-        Log.d("TAG", "oktt");
     }
 
     @Override
@@ -94,17 +87,10 @@ public class ViewWorkSpaceActivity extends AppCompatActivity {
         if (workspace == null)
             Log.d("TAG", "Empty");
         Log.d("TAG", workspace_name.getText().toString());
-        intent.putExtra(MESSAGE5, workspace.getContractAddress());
-        intent.putExtra(MESSAGE6, workspace.getName());
-        intent.putExtra(MESSAGE7, workspace.getId());
+        intent.putExtra(MESSAGE5, workspace);
         Log.d("TAG", workspace.getContractAddress() + " " + workspace.getName() + " " + workspace.getId());
         startActivity(intent);
+        finish();
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelable("reply_visible", workspace);
-        Log.d("TAG", "what");
-    }
 }

@@ -125,8 +125,6 @@ public class LessorMainActivity extends AppCompatActivity {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         Intent intent = null;
-                        // Set item in checked state
-                        menuItem.setChecked(true);
                         switch (menuItem.getItemId()) {
                             case R.id.nav_create_contract:
                                 intent = new Intent(context, AddWorkspaceActivity.class);

@@ -108,8 +108,6 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         Intent intent = null;
-                        // Set item in checked state
-                        menuItem.setChecked(true);
                         switch(menuItem.getItemId()){
                             case R.id.nav_my_contract:
                                 intent = new Intent(context, MyContractsActivity.class);

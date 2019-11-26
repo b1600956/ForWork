@@ -74,12 +74,7 @@
         </activity>
         <activity
             android:name=".FeedbackActivity"
-            android:label="@string/feedback_label"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.forwork.MainActivity" />
-        </activity>
+            android:label="@string/feedback_label" />
         <activity
             android:name=".LessorContractActivity"
             android:label="@string/create_contract"

@@ -29,8 +29,7 @@ public class ViewContractActivity extends AppCompatActivity {
     private ProgressBar contract_progressBar;
     private ProgressBar signContract_progressBar;
     private Button signContract_btn;
-    private String workspaceId;
-    private String contractAddress;
+    private WorkSpace workspace;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +40,8 @@ public class ViewContractActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         Intent intent = getIntent();
-        contractAddress = intent.getStringExtra(ViewWorkSpaceActivity.MESSAGE5);
-        String workspaceName = intent.getStringExtra(ViewWorkSpaceActivity.MESSAGE6);
-        workspaceId = intent.getStringExtra(ViewWorkSpaceActivity.MESSAGE7);
+        workspace = intent.getParcelableExtra(ViewWorkSpaceActivity.MESSAGE5);
         this.workspaceName = findViewById(R.id.view_workspaceName);
-        Log.d("TAG", contractAddress + " " + workspaceName + " " + workspaceId);
         contract_address = findViewById(R.id.view_contract_address);
         contract_minDuration = findViewById(R.id.view_contract_minDuration);
         contract_fee = findViewById(R.id.view_contract_fee);
@@ -55,8 +51,8 @@ public class ViewContractActivity extends AppCompatActivity {
         contract_progressBar = findViewById(R.id.contract_progressBar);
         signContract_progressBar = findViewById(R.id.signContract_progressBar);
         signContract_btn = findViewById(R.id.signContract_btn);
-        contract_address.setText(contractAddress);
-        this.workspaceName.setText(workspaceName);
+        contract_address.setText(workspace.getContractAddress());
+        this.workspaceName.setText(workspace.getName());
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = null;
         if (connMgr != null) {
@@ -65,7 +61,7 @@ public class ViewContractActivity extends AppCompatActivity {
         if (networkInfo != null && networkInfo.isConnected()) {
             new ViewContract(contract_progressBar, contract_address, contract_minDuration, contract_fee
                     , contract_address_label, contract_minDuration_label, contract_fee_label)
-                    .execute(contractAddress);
+                    .execute(workspace.getContractAddress());
         } else {
             Snackbar.make(findViewById(R.id.lessor_contract_layout), "Failed to connect Internet! Please check your Internet connection", Snackbar.LENGTH_LONG);
         }
@@ -75,6 +71,8 @@ public class ViewContractActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // handle arrow click here
         if (item.getItemId() == android.R.id.home) {
+            startActivity(new Intent(this, ViewWorkSpaceActivity.class).putExtra(WorkSpaceAdapter.ViewHolder.MESSAGE4, workspace));
+            Log.d("TAG","wwwww");
             finish();
         }
         return super.onOptionsItemSelected(item);
@@ -95,7 +93,7 @@ public class ViewContractActivity extends AppCompatActivity {
             if (networkInfo != null && networkInfo.isConnected()) {
                 Log.d("TAG", privateKey);
                 new SignContract(signContract_progressBar, Snackbar.make(findViewById(R.id.viewContractLayout), "", Snackbar.LENGTH_LONG), signContract_btn)
-                        .execute(privateKey, contractAddress, contract_fee.getText().toString(), workspaceId);
+                        .execute(privateKey, workspace.getContractAddress(), contract_fee.getText().toString(), workspace.getId());
                 Log.d("TAG", "what");
                 signContract_progressBar.setVisibility(View.VISIBLE);
                 signContract_btn.setVisibility(View.GONE);

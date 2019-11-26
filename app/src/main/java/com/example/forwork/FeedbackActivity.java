@@ -3,7 +3,10 @@ package com.example.forwork;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.RadioGroup;
@@ -31,11 +34,23 @@ public class FeedbackActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         commentView = findViewById(R.id.comment);
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         feedbackDatabase = FirebaseDatabase.getInstance().getReference("Feedback");
         feedbackCategory = findViewById(R.id.feedbackCategory);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            Log.d("TAG","wwwww");
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private boolean validateComment() {
